@@ -1,0 +1,173 @@
+/*
+ * main.css
+ * Root namespace styles
+*/
+
+/** Begin reset */
+  * {
+    margin  : 0;
+    padding : 0;
+    -webkit-box-sizing : border-box;
+    -moz-box-sizing    : border-box;
+    box-sizing         : border-box;
+  }
+  h1,h2,h3,h4,h5,h6,p { margin-bottom : 6pt; }
+  ol,ul,dl { list-style-position : inside;}
+
+  * { 
+    -webkit-user-select : none;
+    -khtml-user-select  : none;
+    -moz-user-select    : -moz-none;
+    -o-user-select      : none;
+    -ms-user-select     : none;
+    user-select         : none;
+
+    -webkit-user-drag : none;
+    -moz-user-drag    : none;
+    user-drag         : none;
+
+    -webkit-tap-highlight-color : transparent;
+    -webkit-touch-callout       : none;
+  }
+
+  input, textarea, .app-x-user-select{
+    -webkit-user-select : text;
+    -khtml-user-select  : text;
+    -moz-user-select    : text;
+    -o-user-select      : text;
+    -ms-user-select     : text;
+    user-select         : text;
+  }
+
+/** End reset */
+
+/** Begin standard selectors */
+  body {
+    font : 10pt 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+    color            : #444;
+    background-color : #888;
+    font-size: 62.5%;
+  }
+  a { text-decoration : none; }
+    a:link, a:visited { color : inherit; }
+    a:hover { text-decoration: underline; }
+
+  strong {
+    font-weight : 800;
+    color       : #000;
+  }
+html, body{
+  height:100%;
+}
+/** End standard selectors */
+
+/** Begin app namespace selectors */
+  #app {
+    position: relative;
+    background : #fff;
+    min-height : 100%;
+    min-width  : 80em;
+/*    height     : 100%;*/
+    width: 100%;
+/*    overflow   : hidden;*/
+	font-size: 1.2em;
+  }
+/** End app namespace selectors */
+
+/** Begin utility selectors */
+  .app-x-select {}
+  .app-x-clearfloat {
+    height     : 0      !important;
+    float      : none   !important;
+    visibility : hidden !important;
+    clear      : both   !important;
+  }
+/** End utility selectors */
+
+#app .header {
+  position: relative;
+  height : 4em;
+  width: 100%;
+  background : blue;
+}
+.header .account {
+  position: absolute;
+  top           : 1%;
+  right         : 0;
+  width         : 20%;
+  height        : 80%;
+  line-height   : 2em;
+  background    : #888;
+  color         : #fff;
+  text-align    : center;
+  cursor        : pointer;
+  display	: inline-block;
+  font-size: 1.5em;
+}
+/*
+ padding-bottom, weil margin nicht zur Hoehe (oder Breite) zaehlt und das Parent-Element nicht 'ausdehnt'
+*/
+#app .main {
+  width: 90%;
+  padding-bottom: 4em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* dynamische Hoehe */
+.main .msg {
+  min-height: 7em;
+  background : purple;
+}
+.main .search {
+  height: 20em;
+  width: 100%;
+  background : #ddd;
+}
+/* dynamische Hoehe, immer die ganze verfuegbare Hoehe einnehmen, Scrollbar wenn nicht alles sichtbar */
+/* dynamische Breite */
+.main .result {
+  min-height: 10em;
+  background : green;
+}
+
+.main .result table{
+  width: 100%;
+  background : yellow;
+  color: black;
+}
+
+.main .result td{
+	width: 20em;
+}
+
+  .spa-x-closed .spa-shell-main-content {
+    left : 0;
+  }
+#app .footer {
+  position: absolute;
+  bottom: 0;
+  height : 4em;
+  width: 100%;
+  background: red;
+}
+#app .modal {
+  position	: absolute;
+  margin-top    : -20em;
+  margin-left   : -20em;
+  top           : 50%;
+  left          : 50%;
+  width         : 40em;
+  height        : 40em;
+  background    : grey;
+  border-radius : .3em;
+  z-index       : 2;
+  display       : none;
+}
+
+.search .options { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+.search .options li { margin: 10px; padding: 0.4em; font-size: 1.4em; height: 28px; }
+
+.search .options .ui-selecting { background: #FECA40; }
+.search .options .ui-selected { background: #F39814; color: white; }
+
