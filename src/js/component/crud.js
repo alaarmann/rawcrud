@@ -18,14 +18,16 @@ module.exports = (function () {
 
   var create = function (parameters){
     var containerElement;
+    var model;  
     var resultlistElement;
-    var resultlistComponent;  
+    var resultlistComponent;
     var result;
 
     containerElement = parameters.containerElement;
+    model = parameters.model;
     resultlistElement = $('<div/>').addClass('result');
     containerElement.append(resultlistElement);
-    resultlistComponent = createResultlist({containerElement : resultlistElement});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, model : model.getHeadItems()});
 
     result = {};
 

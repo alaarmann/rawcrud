@@ -12,7 +12,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', ['lint'], function() {
-  return gulp.src('spec/test.js')
+  return gulp.src('spec/**/*.js')
     .pipe(jasmine({ verbose: true }));
 });
 
