@@ -15,9 +15,15 @@ var $ = require('jquery');
   
 require('jquery-ui');
 
+var createCrud = require('./component/crud.js');
+
+
 $(function() {
   'use strict';
-  $( ".search .options" ).selectable();
+  var crudComponent;
+//  $( ".search .options" ).selectable();
+
+  crudComponent = createCrud({containerElement : $('#app .main')});
 });
 
  
