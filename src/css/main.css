@@ -171,3 +171,5 @@ html, body{
 .search .options .ui-selecting { background: #FECA40; }
 .search .options .ui-selected { background: #F39814; color: white; }
 
+label, input { display:block; }
+

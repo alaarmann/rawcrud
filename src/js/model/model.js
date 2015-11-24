@@ -21,8 +21,14 @@ module.exports = (function () {
         return headItems;
     };
 
+    var addHeadItem = function(aHeadItemSpec){
+        headItems.push(createHeadItem(aHeadItemSpec));
+        return;
+    };
+
     result = {
-      getHeadItems : getHeadItems
+      getHeadItems : getHeadItems,
+      addHeadItem : addHeadItem
     };
     return result;
   };
