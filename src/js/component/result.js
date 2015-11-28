@@ -28,7 +28,7 @@ module.exports = (function () {
     tableElement = $('<table/>');
     tableElement.append('<tr><th>Ueberschrift Spalte 1</th><th>Ueberschrift Spalte 2</th><th>Ueberschrift Spalte 3</th></tr>');
     containerElement.append(tableElement);
-    containerElement.addClass('headItemsList');
+    containerElement.addClass('headItems');
     containerElement.on('render', function(){
       render();
     });

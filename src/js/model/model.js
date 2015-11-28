@@ -24,7 +24,7 @@ module.exports = (function () {
 
     var addHeadItem = function(aHeadItemSpec){
         headItems.push(createHeadItem(aHeadItemSpec));
-        trigger('render', 'headItemsList');
+        trigger('render', 'headItems');
         return;
     };
 

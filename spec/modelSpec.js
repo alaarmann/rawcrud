@@ -51,7 +51,7 @@ describe("Model", function() {
       expect(headItems.length).toEqual(this.headItemCount + 1);
       expect(headItems[this.headItemCount].getReference()).toEqual('20151124-006');
       expect(headItems[this.headItemCount].getOwner()).toEqual('NEMO');
-      expect(this.triggerMock).toHaveBeenCalledWith('render', 'headItemsList');
+      expect(this.triggerMock).toHaveBeenCalledWith('render', 'headItems');
     });
   });
 });
