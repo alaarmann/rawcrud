@@ -2,7 +2,7 @@
  * Model Specification
 */
 
-/*globals require, describe, it, expect, beforeEach, afterEach, beforeAll, afterAll */
+/*globals require, describe, it, expect, beforeEach, afterEach, beforeAll, afterAll, jasmine */
 
 var mockery = require('mockery');
 
@@ -18,8 +18,9 @@ describe("Model", function() {
   });
  
   beforeEach(function() {
-    mockery.enable();
-    mockery.registerMock('./trigger.js', function(){});
+    mockery.enable({ useCleanCache: true });
+    this.triggerMock = jasmine.createSpy('trigger');
+    mockery.registerMock('./trigger.js', this.triggerMock);
     var createModel = require('../src/js/model/model.js');
 
     this.model = createModel();
@@ -50,6 +51,7 @@ describe("Model", function() {
       expect(headItems.length).toEqual(this.headItemCount + 1);
       expect(headItems[this.headItemCount].getReference()).toEqual('20151124-006');
       expect(headItems[this.headItemCount].getOwner()).toEqual('NEMO');
+      expect(this.triggerMock).toHaveBeenCalledWith('render', 'headItemsList');
     });
   });
 });
