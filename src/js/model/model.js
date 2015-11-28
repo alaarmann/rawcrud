@@ -5,6 +5,7 @@
 /*globals require, module */
 
 var createHeadItem = require('./headItem.js');
+var trigger = require('./trigger.js');
 
 module.exports = (function () {
   'use strict';
@@ -23,6 +24,7 @@ module.exports = (function () {
 
     var addHeadItem = function(aHeadItemSpec){
         headItems.push(createHeadItem(aHeadItemSpec));
+        trigger('render', 'headItemsList');
         return;
     };
 

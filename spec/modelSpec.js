@@ -2,16 +2,33 @@
  * Model Specification
 */
 
-/*globals require, describe, it, expect, beforeEach */
+/*globals require, describe, it, expect, beforeEach, afterEach, beforeAll, afterAll */
 
-var createModel = require('../src/js/model/model.js');
+var mockery = require('mockery');
 
 describe("Model", function() {
   'use strict';
+
+  beforeAll(function() {
+    mockery.registerAllowables(['../src/js/model/model.js', './headItem.js']);
+  });
+
+  afterAll(function() {
+    mockery.deregisterAllowables(['../src/js/model/model.js', './headItem.js']);
+  });
  
   beforeEach(function() {
+    mockery.enable();
+    mockery.registerMock('./trigger.js', function(){});
+    var createModel = require('../src/js/model/model.js');
+
     this.model = createModel();
     this.headItemCount = 3;
+  });
+
+  afterEach(function() {
+    mockery.deregisterMock('./trigger.js');
+    mockery.disable();
   });
 
   describe("create", function() {

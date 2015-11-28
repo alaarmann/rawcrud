@@ -36,12 +36,6 @@ module.exports = (function () {
       width: 350,
       modal: true,
       appendTo : '#' + containerElementId,
-      buttons: {
-        "Create": function (){},
-        Cancel: function() {
-          dialogElement.dialog( "close" );
-        }
-      },
       close: function() {
       }
     });

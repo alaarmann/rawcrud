@@ -39,10 +39,17 @@ module.exports = (function () {
       dialog.dialog( "close" );
     };
 
-
+    // submit triggered by e.g. enter while dialog has focus
     dialogForm.on( "submit", function( event ) {
       event.preventDefault();
       processForm();
+    });
+
+    dialog.dialog( "option", "buttons", {
+      'Create': processForm,
+      'Cancel': function() {
+          dialog.dialog( "close" );
+        }
     });
 
     result = {};
