@@ -8,7 +8,7 @@
   regexp : true, undef : true,
   white  : true
 */
-/*globals require, describe, it, expect, jasmine */
+/*globals require, describe, it, expect */
 
 var createHeadItem = require('../src/js/model/headItem.js');
 

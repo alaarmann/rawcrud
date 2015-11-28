@@ -2,7 +2,7 @@
  * Model Specification
 */
 
-/*globals require, describe, it, expect, jasmine, beforeEach */
+/*globals require, describe, it, expect, beforeEach */
 
 var createModel = require('../src/js/model/model.js');
 
