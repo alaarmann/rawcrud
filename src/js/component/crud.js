@@ -19,6 +19,7 @@ module.exports = (function () {
     var resultlistElement;
     var resultlistComponent;
     var result;
+    var buttonElement;
 
     containerElement = parameters.containerElement;
     model = parameters.model;
@@ -26,6 +27,13 @@ module.exports = (function () {
     createElement = $('<div/>').addClass('create');
     containerElement.append(createElement);
     createComponent = createCreate({containerElement : createElement, model : model.addHeadItem});
+
+    buttonElement = $('<div>Create HeadItem</div>').addClass('button');
+    buttonElement.button().on( "click", function() {
+      createElement.find('.create-dialog').dialog( "open" );
+    });
+
+    containerElement.append(buttonElement);
 
     resultlistElement = $('<div/>').addClass('result');
     containerElement.append(resultlistElement);
