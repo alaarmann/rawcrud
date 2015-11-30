@@ -23,6 +23,42 @@ describe("HeadItem", function() {
       expect(headItem.getOwner()).toEqual('NEMO');
       expect(headItem.getReference()).toEqual('20151120-001');
     });
+
+    it("creates an empty HeadItem without specification", function() {
+      var newHeadItem = createHeadItem();
+
+      expect(newHeadItem).not.toBe(null);
+      expect(newHeadItem.getOwner()).toBe(undefined);
+      expect(newHeadItem.getReference()).toBe(undefined);
+    });
+
+  });
+
+  describe("getOwner / setOwner", function() {
+    it("sets / gets owner", function() {
+      var headItem = createHeadItem({owner : 'NEMO', reference : '20151120-001'});
+      headItem.setOwner('IDEM');
+      expect(headItem.getOwner()).not.toBe(null);
+      expect(headItem.getOwner()).toEqual('IDEM');
+    });
+  });
+
+  describe("getReference / setReference", function() {
+    it("sets / gets owner", function() {
+      var headItem = createHeadItem({owner : 'NEMO', reference : '20151120-001'});
+      headItem.setReference('aRef');
+      expect(headItem.getReference()).not.toBe(null);
+      expect(headItem.getReference()).toEqual('aRef');
+    });
+  });
+
+  describe("getCustomer / setCustomer", function() {
+    it("sets / gets customer", function() {
+      var headItem = createHeadItem({owner : 'NEMO', reference : '20151120-001'});
+      headItem.setCustomer('CUST');
+      expect(headItem.getCustomer()).not.toBe(null);
+      expect(headItem.getCustomer()).toEqual('CUST');
+    });
   });
 
   describe("getCustomer / setCustomer", function() {

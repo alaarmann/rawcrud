@@ -6,6 +6,7 @@
 
 var createHeadItem = require('./headItem.js');
 var trigger = require('./trigger.js');
+var util = require('./util.js');
 
 module.exports = (function () {
   'use strict';
@@ -22,15 +23,22 @@ module.exports = (function () {
         return headItems;
     };
 
-    var addHeadItem = function(aHeadItemSpec){
-        headItems.push(createHeadItem(aHeadItemSpec));
+    var addHeadItem = function(aHeadItem){
+        headItems.push(aHeadItem);
         trigger('render', 'headItems');
         return;
     };
 
+    var startWorkOn = function(aIndex){
+
+        return util.clone(headItems[aIndex]);
+    };
+
     result = {
       getHeadItems : getHeadItems,
-      addHeadItem : addHeadItem
+      addHeadItem : addHeadItem,
+      startWorkOn : startWorkOn,
+      createHeadItem : createHeadItem
     };
     return result;
   };

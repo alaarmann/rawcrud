@@ -19,6 +19,7 @@ module.exports = (function () {
     var owner;
     var reference;
     var view;
+    var model;
 
     containerElement = parameters.containerElement;
     containerElement.uniqueId();
@@ -32,10 +33,9 @@ module.exports = (function () {
     reference = view.find('#reference');
 
     processForm = function(){
-      addHeadItem({
-        'owner' : owner.val(), 
-        'reference' : reference.val() 
-      });
+      model.setOwner(owner.val());
+      model.setReference(reference.val());
+      addHeadItem(model);
       dialog.dialog( "close" );
     };
 
@@ -50,6 +50,13 @@ module.exports = (function () {
       'Cancel': function() {
           dialog.dialog( "close" );
         }
+    });
+
+    containerElement.on('open', function(aEvent, aModelToWorkOn){
+      model = aModelToWorkOn;
+      owner.val(model.getOwner());
+      reference.val(model.getReference());
+      dialog.dialog( 'open' );
     });
 
     result = {};

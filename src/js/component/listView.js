@@ -18,7 +18,7 @@ module.exports = (function () {
     model = getModel();
     tableElement.find('td').closest('tr').remove();
     for(i=0;i<model.length;i+=1){
-      tableElement.append('<tr><td>' + model[i].getOwner() + '</td><td>' + model[i].getReference() + '</td><td>Zeile ' + i + ', Spalte 3</td></tr>');
+      tableElement.append('<tr class="headItem"><td>' + model[i].getOwner() + '</td><td>' + model[i].getReference() + '</td><td>Zeile ' + i + ', Spalte 3</td></tr>');
     }
 
   };
@@ -34,6 +34,10 @@ module.exports = (function () {
     containerElement.addClass('headItems');
     containerElement.on('render', function(){
       render();
+    });
+    containerElement.on('dblclick', '.headItem', function(){
+      var rowIndex = tableElement.find('.headItem').index(this);
+      parameters.editRecordAt(rowIndex);
     });
 
     render();

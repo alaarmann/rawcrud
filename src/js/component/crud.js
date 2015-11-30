@@ -10,11 +10,17 @@ var createResultlist = require('./result.js');
 
 module.exports = (function () {
   'use strict';
+  var createElement;
+  var model;
+
+  var editRecordAt = function (aIndex){
+    var modelToWorkOn = model.startWorkOn(aIndex);
+    createElement.triggerHandler('open', [ modelToWorkOn ]);
+    
+  };
 
   var create = function (parameters){
     var containerElement;
-    var model;  
-    var createElement;
     var createComponent;
     var resultlistElement;
     var resultlistComponent;
@@ -30,14 +36,15 @@ module.exports = (function () {
 
     buttonElement = $('<div>Create HeadItem</div>').addClass('button');
     buttonElement.button().on( "click", function() {
-      createElement.find('.create-dialog').dialog( "open" );
+      var newModelToWorkOn = model.createHeadItem();
+      createElement.triggerHandler('open', [ newModelToWorkOn ]);
     });
 
     containerElement.append(buttonElement);
 
     resultlistElement = $('<div/>').addClass('result');
     containerElement.append(resultlistElement);
-    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : model.getHeadItems});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : model.getHeadItems, editRecordAt : editRecordAt});
 
     result = {};
 
