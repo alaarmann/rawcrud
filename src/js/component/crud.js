@@ -37,7 +37,7 @@ module.exports = (function () {
 
     resultlistElement = $('<div/>').addClass('result');
     containerElement.append(resultlistElement);
-    resultlistComponent = createResultlist({containerElement : resultlistElement, model : model.getHeadItems()});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : model.getHeadItems});
 
     result = {};
 
