@@ -29,8 +29,7 @@ module.exports = (function () {
     };
 
     var startWorkOn = function(aIndex){
-        // ToDo: this must be a complete copy
-        return createHeadItem({owner : headItems[aIndex].getOwner(), reference : headItems[aIndex].getReference()});
+        return createHeadItem(headItems[aIndex].exportCollection());
     };
 
     result = {
