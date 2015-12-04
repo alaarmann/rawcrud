@@ -69,4 +69,18 @@ describe("HeadItem", function() {
       expect(headItem.getId()).toEqual(id);
     });
   });
+
+  describe("exportCollection", function() {
+    it("exports object as keyed collection", function() {
+      var id = '1234';
+      var owner = 'NEMO';
+      var reference = '20151120-001';
+      var headItem = createHeadItem({id : id, owner : owner, reference : reference});
+      var collection = headItem.exportCollection();
+      expect(collection).not.toBe(null);
+      expect(collection.id).toEqual(id);
+      expect(collection.owner).toEqual(owner);
+      expect(collection.reference).toEqual(reference);
+    });
+  });
 });

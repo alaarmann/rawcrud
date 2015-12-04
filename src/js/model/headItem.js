@@ -40,6 +40,13 @@ module.exports = (function () {
     var getCustomer = function(){
         return customer;
     };
+    var exportCollection = function(){
+      var result = {};
+      result.id = id;
+      result.owner = owner;
+      result.reference = reference;
+      return result;
+    };
 
     result = {
       getId : getId,
@@ -48,7 +55,8 @@ module.exports = (function () {
       getReference : getReference,
       setReference : setReference,
       setCustomer : setCustomer,
-      getCustomer : getCustomer
+      getCustomer : getCustomer,
+      exportCollection : exportCollection
     };
     return result;
   };
