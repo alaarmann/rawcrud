@@ -8,15 +8,20 @@ module.exports = (function () {
   'use strict';
 
   var create = function (parameters){
+    var id;
     var owner;
     var reference;
     var customer;  
     var result;
 
     parameters = parameters || {};
+    id = parameters.id;
     owner = parameters.owner;
     reference = parameters.reference;
 
+    var getId = function(){
+        return id;
+    };
     var getOwner = function(){
         return owner;
     };
@@ -37,6 +42,7 @@ module.exports = (function () {
     };
 
     result = {
+      getId : getId,
       getOwner : getOwner,
       setOwner : setOwner,
       getReference : getReference,

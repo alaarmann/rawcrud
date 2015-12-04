@@ -61,12 +61,12 @@ describe("HeadItem", function() {
     });
   });
 
-  describe("getCustomer / setCustomer", function() {
-    it("sets / gets customer", function() {
-      var headItem = createHeadItem({owner : 'NEMO', reference : '20151120-001'});
-      headItem.setCustomer('CUST');
-      expect(headItem.getCustomer()).not.toBe(null);
-      expect(headItem.getCustomer()).toEqual('CUST');
+  describe("getId", function() {
+    it("gets identifier", function() {
+      var id = '1234';
+      var headItem = createHeadItem({id : id, owner : 'NEMO', reference : '20151120-001'});
+      expect(headItem.getId()).not.toBe(null);
+      expect(headItem.getId()).toEqual(id);
     });
   });
 });
