@@ -84,7 +84,8 @@ describe("Model", function() {
 
       expect(clonedHeadItem).not.toBe(null);
       expect(clonedHeadItem).not.toBe(headItem);
-      expect(clonedHeadItem).toEqual(headItem);
+      expect(clonedHeadItem.getOwner).not.toBe(headItem.getOwner);
+      expect(clonedHeadItem.getReference).not.toBe(headItem.getReference);
       expect(clonedHeadItem.getOwner()).toEqual(headItem.getOwner());
       expect(clonedHeadItem.getReference()).toEqual(headItem.getReference());
     });

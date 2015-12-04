@@ -1,5 +1,5 @@
 /*
- * Create Component 
+ * Editor Component 
 */
 
 /*globals require, module */

@@ -6,7 +6,6 @@
 
 var createHeadItem = require('./headItem.js');
 var trigger = require('./trigger.js');
-var util = require('./util.js');
 
 module.exports = (function () {
   'use strict';
@@ -30,8 +29,8 @@ module.exports = (function () {
     };
 
     var startWorkOn = function(aIndex){
-
-        return util.clone(headItems[aIndex]);
+        // ToDo: this must be a complete copy
+        return createHeadItem({owner : headItems[aIndex].getOwner(), reference : headItems[aIndex].getReference()});
     };
 
     result = {
