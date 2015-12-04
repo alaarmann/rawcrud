@@ -173,3 +173,6 @@ html, body{
 
 label, input { display:block; }
 
+th.id, td.id{display : none;}
+
+

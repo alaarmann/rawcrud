@@ -79,8 +79,9 @@ describe("Model", function() {
   describe("startWorkOn", function() {
     it("returns a clone of the HeadItem at given index", function() {
       var model = this.model;
-      var clonedHeadItem = model.startWorkOn(1);
-      var headItem = model.getHeadItems()[1];
+      var anId = '1000001';
+      var clonedHeadItem = model.startWorkOn(anId);
+      var headItem = model.getHeadItems()[0];
 
       expect(clonedHeadItem).not.toBe(null);
       expect(clonedHeadItem).not.toBe(headItem);

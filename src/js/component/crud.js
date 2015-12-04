@@ -13,8 +13,8 @@ module.exports = (function () {
   var editorElement;
   var model;
 
-  var editRecordAt = function (aIndex){
-    var modelToWorkOn = model.startWorkOn(aIndex);
+  var editRecordAt = function (aId){
+    var modelToWorkOn = model.startWorkOn(aId);
     editorElement.triggerHandler('open', [ modelToWorkOn ]);
     
   };
@@ -32,7 +32,7 @@ module.exports = (function () {
 
     editorElement = $('<div/>').addClass('create');
     containerElement.append(editorElement);
-    editorComponent = createEditor({containerElement : editorElement, model : model.addHeadItem});
+    editorComponent = createEditor({containerElement : editorElement, model : model.save});
 
     buttonElement = $('<div>Create HeadItem</div>').addClass('button');
     buttonElement.button().on( "click", function() {

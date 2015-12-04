@@ -11,7 +11,7 @@ module.exports = (function () {
 
   var create = function (parameters){
     var containerElement;
-    var addHeadItem;
+    var save;
     var result;
     var dialogForm;
     var dialog;
@@ -23,7 +23,7 @@ module.exports = (function () {
 
     containerElement = parameters.containerElement;
     containerElement.uniqueId();
-    addHeadItem = parameters.model;
+    save = parameters.model;
 
     view = createView(containerElement);
 
@@ -35,7 +35,7 @@ module.exports = (function () {
     processForm = function(){
       model.setOwner(owner.val());
       model.setReference(reference.val());
-      addHeadItem(model);
+      save(model);
       dialog.dialog( "close" );
     };
 
