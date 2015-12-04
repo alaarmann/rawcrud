@@ -22,7 +22,7 @@ module.exports = (function () {
         return headItems;
     };
 
-    var addHeadItem = function(aHeadItem){
+    var save = function(aHeadItem){
         headItems.push(aHeadItem);
         trigger('render', 'headItems');
         return;
@@ -34,7 +34,7 @@ module.exports = (function () {
 
     result = {
       getHeadItems : getHeadItems,
-      addHeadItem : addHeadItem,
+      save : save,
       startWorkOn : startWorkOn,
       createHeadItem : createHeadItem
     };

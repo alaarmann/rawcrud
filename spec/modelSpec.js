@@ -63,10 +63,10 @@ describe("Model", function() {
     });
   });
 
-  describe("addHeadItem", function() {
-    it("adds a HeadItem to the Model", function() {
+  describe("save", function() {
+    it("saves a new item thereby creating it", function() {
       var model = this.model;
-      model.addHeadItem(model.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
+      model.save(model.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
       var headItems = model.getHeadItems();
 
       expect(headItems.length).toEqual(this.headItemCount + 1);
