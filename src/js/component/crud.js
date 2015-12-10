@@ -32,7 +32,7 @@ module.exports = (function () {
 
     editorElement = $('<div/>').addClass('create');
     containerElement.append(editorElement);
-    editorComponent = createEditor({containerElement : editorElement, model : model.save});
+    editorComponent = createEditor({containerElement : editorElement, model : model.save, onsuccess : model.retrieve});
 
     buttonElement = $('<div>Create HeadItem</div>').addClass('button');
     buttonElement.button().on( "click", function() {
@@ -46,6 +46,8 @@ module.exports = (function () {
     containerElement.append(resultlistElement);
     resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : model.getHeadItems, editRecordAt : editRecordAt});
 
+    model.retrieve();
+    
     result = {};
 
     return result;

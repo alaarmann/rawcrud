@@ -20,10 +20,12 @@ module.exports = (function () {
     var reference;
     var view;
     var model;
+    var onsuccess;
 
     containerElement = parameters.containerElement;
     containerElement.uniqueId();
     save = parameters.model;
+    onsuccess = parameters.onsuccess;
 
     view = createView(containerElement);
 
@@ -36,6 +38,7 @@ module.exports = (function () {
       model.setOwner(owner.val());
       model.setReference(reference.val());
       save(model);
+      onsuccess();
       dialog.dialog( "close" );
     };
 
