@@ -21,6 +21,7 @@ module.exports = (function () {
   var create = function (){
     var result;
     var headItems = {};
+    var headItemsRetrieved = {};
     var curId;
 
     curId = createId();
@@ -34,11 +35,11 @@ module.exports = (function () {
       var result = [];
       var each;
 
-      for (each in headItems) {
-        if (!headItems.hasOwnProperty(each)) {
+      for (each in headItemsRetrieved) {
+        if (!headItemsRetrieved.hasOwnProperty(each)) {
           continue;
         }
-        result.push(headItems[each]);
+        result.push(headItemsRetrieved[each]);
       }
       return result;
     };
@@ -54,14 +55,31 @@ module.exports = (function () {
     };
 
     var startWorkOn = function(aId){
-        return createHeadItem(headItems[aId].exportCollection());
+        return createHeadItem(headItemsRetrieved[aId].exportCollection());
     };
+
+    var retrieve = function(){
+      var each;
+
+      headItemsRetrieved = {};
+      for (each in headItems) {
+        if (!headItems.hasOwnProperty(each)) {
+          continue;
+        }
+        headItemsRetrieved[each] = headItems[each];
+      }
+        
+      trigger('render', 'headItems');
+      return;
+    };
+
 
     result = {
       getHeadItems : getHeadItems,
       save : save,
       startWorkOn : startWorkOn,
-      createHeadItem : createHeadItem
+      createHeadItem : createHeadItem,
+      retrieve : retrieve
     };
     return result;
   };
