@@ -14,7 +14,7 @@ module.exports = (function () {
     var buttonElement;
     var resultlistElement;
 
-    editorElement = $('<div/>').addClass('create');
+    editorElement = $('<div/>').addClass('editor');
     aContainerElement.append(editorElement);
 
     buttonElement = $('<div>Create HeadItem</div>').addClass('button');

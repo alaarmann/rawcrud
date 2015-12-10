@@ -34,7 +34,7 @@ module.exports = (function () {
 
     view = createView(containerElement);
 
-    editorElement = containerElement.find('.create');
+    editorElement = containerElement.find('.editor');
     editorComponent = createEditor({containerElement : editorElement, model : model.save, onsuccess : model.retrieve});
 
     buttonElement = containerElement.find('.button');

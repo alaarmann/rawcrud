@@ -15,7 +15,7 @@ module.exports = (function () {
     
     containerElementId = aContainerElement.attr('id');
     dialogElement =  $(
-      '<div title="Create new HeadItem" class="create-dialog">' +
+      '<div title="Create / edit HeadItem" class="editor-dialog">' +
         '<form>' +
           '<fieldset>' +
             '<label for="owner">Owner</label>' +
