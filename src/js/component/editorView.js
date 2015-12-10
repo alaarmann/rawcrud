@@ -19,9 +19,9 @@ module.exports = (function () {
         '<form>' +
           '<fieldset>' +
             '<label for="owner">Owner</label>' +
-            '<input type="text" name="owner" id="owner" value="" class="text ui-widget-content ui-corner-all"/>' +
+            '<input type="text" name="owner" id="owner" value="" class="propOwner text ui-widget-content ui-corner-all"/>' +
             '<label for="reference">Reference</label>' +
-            '<input type="text" name="reference" id="reference" value="" class="text ui-widget-content ui-corner-all"/>' +
+            '<input type="text" name="reference" id="reference" value="" class="propReference text ui-widget-content ui-corner-all"/>' +
             '<input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>' +
           '</fieldset>' +
         '</form>' +

@@ -21,6 +21,8 @@ module.exports = (function () {
     var view;
     var model;
     var onsuccess;
+    var render;
+    var evaluate;
 
     containerElement = parameters.containerElement;
     containerElement.uniqueId();
@@ -35,8 +37,7 @@ module.exports = (function () {
     reference = view.find('#reference');
 
     processForm = function(){
-      model.setOwner(owner.val());
-      model.setReference(reference.val());
+      evaluate();
       save(model);
       onsuccess();
       dialog.dialog( "close" );
@@ -56,11 +57,52 @@ module.exports = (function () {
     });
 
     containerElement.on('open', function(aEvent, aModelToWorkOn){
+      // FIXME model is set HERE!?
       model = aModelToWorkOn;
-      owner.val(model.getOwner());
-      reference.val(model.getReference());
+      render();
       dialog.dialog( 'open' );
     });
+
+    /* Wire model's properties to output fields in view */ 
+    render = function(){
+      var each;
+      var propertyName;
+      var className;
+
+      for (each in model) {
+        if (each.indexOf('get') !== 0) {
+          continue;
+        }
+        if (!model.hasOwnProperty(each)) {
+          continue;
+        }
+        propertyName = each.slice('get'.length);
+        className = 'prop' + propertyName;
+
+        containerElement.find('input.' + className).val(model[each]());
+      }
+    };
+
+    /* Wire model's properties to input fields in view */ 
+    evaluate = function(){
+      var each;
+      var propertyName;
+      var className;
+
+      for (each in model) {
+        if (each.indexOf('set') !== 0) {
+          continue;
+        }
+        if (!model.hasOwnProperty(each)) {
+          continue;
+        }
+        propertyName = each.slice('set'.length);
+        className = 'prop' + propertyName;
+
+        model[each](containerElement.find('input.' + className).val());
+      }
+
+    };
 
     result = {};
 
