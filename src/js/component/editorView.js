@@ -14,7 +14,9 @@ module.exports = (function () {
     var containerElementId;
     var open;
     var close;
-    
+        
+    aContainerElement.uniqueId();
+
     containerElementId = aContainerElement.attr('id');
     dialogElement =  $(
       '<div title="Create / edit HeadItem" class="editor-dialog">' +
@@ -48,6 +50,12 @@ module.exports = (function () {
           close();
         }
       }
+    });
+
+    // submit triggered by e.g. enter while dialog has focus
+    aContainerElement.find('form').on( "submit", function( event ) {
+      event.preventDefault();
+      aContainerElement.triggerHandler('ua.process');
     });
 
     open = function() {

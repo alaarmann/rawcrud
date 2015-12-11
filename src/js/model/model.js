@@ -50,7 +50,7 @@ module.exports = (function () {
           collection.id = createId();
         }
         headItems[collection.id] = createHeadItem(collection);
-        trigger('render', 'headItems');
+        retrieve();
         return;
     };
 

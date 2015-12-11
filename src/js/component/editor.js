@@ -16,29 +16,19 @@ module.exports = (function () {
     var dialog;
     var processForm;
     var model;
-    var onsuccess;
     var render;
     var evaluate;
 
     containerElement = parameters.containerElement;
-    containerElement.uniqueId();
     save = parameters.model;
-    onsuccess = parameters.onsuccess;
 
     dialog = createView(containerElement);
 
     processForm = function(){
       evaluate();
       save(model);
-      onsuccess();
       dialog.close();
     };
-
-    // submit triggered by e.g. enter while dialog has focus
-    containerElement.on( "submit", function( event ) {
-      event.preventDefault();
-      processForm();
-    });
 
     containerElement.on( "ua.process", function( event ) {
       event.preventDefault();
@@ -46,7 +36,7 @@ module.exports = (function () {
     });
 
     containerElement.on('open', function(aEvent, aModelToWorkOn){
-      // FIXME model is set HERE!?
+      // model is set HERE!
       model = aModelToWorkOn;
       render();
       dialog.open();
