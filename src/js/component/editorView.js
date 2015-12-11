@@ -12,6 +12,8 @@ module.exports = (function () {
   var create = function (aContainerElement){
     var dialogElement;
     var containerElementId;
+    var open;
+    var close;
     
     containerElementId = aContainerElement.attr('id');
     dialogElement =  $(
@@ -37,17 +39,30 @@ module.exports = (function () {
       modal: true,
       appendTo : '#' + containerElementId,
       close: function() {
+      },
+      buttons: {
+        'Create': function() {
+          aContainerElement.triggerHandler('ua.process');
+        },
+        'Cancel': function() {
+          close();
+        }
       }
     });
 
-//    dialogForm.on( "submit", function( event ) {
-//      event.preventDefault();
-//      processForm();
-//    });
+    open = function() {
+      dialogElement.dialog( 'open' );
+    };
 
+    close = function() {
+      dialogElement.dialog( 'close' );
+    };
  
 
-    return dialogElement;
+    return {
+      open : open,
+      close : close
+    };
   };
  
   return create;

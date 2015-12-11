@@ -13,12 +13,8 @@ module.exports = (function () {
     var containerElement;
     var save;
     var result;
-    var dialogForm;
     var dialog;
     var processForm;
-    var owner;
-    var reference;
-    var view;
     var model;
     var onsuccess;
     var render;
@@ -29,38 +25,31 @@ module.exports = (function () {
     save = parameters.model;
     onsuccess = parameters.onsuccess;
 
-    view = createView(containerElement);
-
-    dialog = view;
-    dialogForm = dialog.find('form');
-    owner = view.find('#owner');
-    reference = view.find('#reference');
+    dialog = createView(containerElement);
 
     processForm = function(){
       evaluate();
       save(model);
       onsuccess();
-      dialog.dialog( "close" );
+      dialog.close();
     };
 
     // submit triggered by e.g. enter while dialog has focus
-    dialogForm.on( "submit", function( event ) {
+    containerElement.on( "submit", function( event ) {
       event.preventDefault();
       processForm();
     });
 
-    dialog.dialog( "option", "buttons", {
-      'Create': processForm,
-      'Cancel': function() {
-          dialog.dialog( "close" );
-        }
+    containerElement.on( "ua.process", function( event ) {
+      event.preventDefault();
+      processForm();
     });
 
     containerElement.on('open', function(aEvent, aModelToWorkOn){
       // FIXME model is set HERE!?
       model = aModelToWorkOn;
       render();
-      dialog.dialog( 'open' );
+      dialog.open();
     });
 
     /* Wire model's properties to output fields in view */ 
