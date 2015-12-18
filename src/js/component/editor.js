@@ -5,83 +5,42 @@
 /*globals require, module */
 
 var createView = require('./editorView.js');
+var createBaseComponent = require('./BaseComponent.js');
 
 module.exports = (function () {
   'use strict';
 
   var create = function (parameters){
-    var containerElement;
     var save;
     var result;
     var dialog;
     var processForm;
-    var model;
-    var render;
-    var evaluate;
+    var component;
 
-    containerElement = parameters.containerElement;
+    component = createBaseComponent();
+
+    component.containerElement = parameters.containerElement;
     save = parameters.model;
 
-    dialog = createView(containerElement);
+    dialog = createView(component.containerElement);
 
     processForm = function(){
-      evaluate();
-      save(model);
+      component.evaluate();
+      save(component.model);
       dialog.close();
     };
 
-    containerElement.on( "ua.process", function( event ) {
+    component.containerElement.on( "ua.process", function( event ) {
       event.preventDefault();
       processForm();
     });
 
-    containerElement.on('open', function(aEvent, aModelToWorkOn){
+    component.containerElement.on('open', function(aEvent, aModelToWorkOn){
       // model is set HERE!
-      model = aModelToWorkOn;
-      render();
+      component.model = aModelToWorkOn;
+      component.render();
       dialog.open();
     });
-
-    /* Wire model's properties to output fields in view */ 
-    render = function(){
-      var each;
-      var propertyName;
-      var className;
-
-      for (each in model) {
-        if (each.indexOf('get') !== 0) {
-          continue;
-        }
-        if (!model.hasOwnProperty(each)) {
-          continue;
-        }
-        propertyName = each.slice('get'.length);
-        className = 'prop' + propertyName;
-
-        containerElement.find('input.' + className).val(model[each]());
-      }
-    };
-
-    /* Wire model's properties to input fields in view */ 
-    evaluate = function(){
-      var each;
-      var propertyName;
-      var className;
-
-      for (each in model) {
-        if (each.indexOf('set') !== 0) {
-          continue;
-        }
-        if (!model.hasOwnProperty(each)) {
-          continue;
-        }
-        propertyName = each.slice('set'.length);
-        className = 'prop' + propertyName;
-
-        model[each](containerElement.find('input.' + className).val());
-      }
-
-    };
 
     result = {};
 
