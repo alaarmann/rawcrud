@@ -44,7 +44,7 @@ module.exports = (function () {
     });
 
     resultlistElement = containerElement.find('.result');
-    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : model.getHeadItems, editRecordAt : editRecordAt});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : function(){ return {getHeadItems : model.getHeadItems};}, editRecordAt : editRecordAt});
 
     model.retrieve();
     

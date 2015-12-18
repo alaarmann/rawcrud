@@ -173,6 +173,8 @@ html, body{
 
 label, input { display:block; }
 
-th.id, td.id{display : none;}
+th.propId, td.propId{display : none;}
+
+.rawcrud-list{display : none;}
 
 

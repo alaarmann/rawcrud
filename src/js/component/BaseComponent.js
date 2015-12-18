@@ -9,25 +9,52 @@ module.exports = (function () {
 
   var create = function (){
     var result = {};
+    var internalRender;
 
     /* Wire model's properties to output fields in view */ 
-    result.render = function(){
+    internalRender = function(aContainerElement, aModel){
       var each;
       var propertyName;
       var className;
+      var value;
+      var prototypeItem;
+      var newItem;
+      var i;
 
-      for (each in result.model) {
+      for (each in aModel) {
         if (each.indexOf('get') !== 0) {
           continue;
         }
-        if (!result.model.hasOwnProperty(each)) {
+        if (!aModel.hasOwnProperty(each)) {
           continue;
         }
-        propertyName = each.slice('get'.length);
-        className = 'prop' + propertyName;
+        if (typeof(aModel[each]) !== 'function') {
+          continue;
+        }
 
-        result.containerElement.find('input.' + className).val(result.model[each]());
+        propertyName = each.slice('get'.length);
+        console.log('propertyName: ' + propertyName);
+        className = 'prop' + propertyName;
+        value = aModel[each]();
+        // Treat list value differently than single value
+        if (value && value.constructor === Array){
+          prototypeItem = aContainerElement.find('.rawcrud-list.' + className);
+          prototypeItem.nextAll().remove();
+          // FIXME do not clone id attributes
+          for(i=0;i<value.length;i+=1){
+            newItem = prototypeItem.clone().removeClass('rawcrud-list').appendTo(prototypeItem.parent());
+            internalRender(newItem, value[i]);
+          }
+        } else {
+          aContainerElement.find('input.' + className).val(value);
+          aContainerElement.find('td.' + className).text(value);
+        }
+        
       }
+    };
+
+    result.render = function() {
+      return internalRender(result.containerElement, result.model);
     };
 
     /* Wire model's properties to input fields in view */ 
@@ -41,6 +68,9 @@ module.exports = (function () {
           continue;
         }
         if (!result.model.hasOwnProperty(each)) {
+          continue;
+        }
+        if (typeof(result.model[each]) !== 'function') {
           continue;
         }
         propertyName = each.slice('set'.length);
