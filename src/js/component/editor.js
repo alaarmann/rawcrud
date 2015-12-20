@@ -17,9 +17,12 @@ module.exports = (function () {
     var processForm;
     var component;
 
-    component = createBaseComponent();
+    component = createBaseComponent(
+      {
+        'containerElement' : parameters.containerElement
+      }
+    );
 
-    component.containerElement = parameters.containerElement;
     save = parameters.model;
 
     dialog = createView(component.containerElement);

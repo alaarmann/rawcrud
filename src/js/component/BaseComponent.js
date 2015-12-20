@@ -2,14 +2,50 @@
  * BaseComponent 
 */
 
-/*globals module */
+/*globals require, module */
+var $ = require('jquery');
+
 
 module.exports = (function () {
   'use strict';
 
-  var create = function (){
-    var result = {};
+  var create = function (aThisComponent){
+    var result = aThisComponent || {};
     var internalRender;
+    var createUserTriggeredEventHandler;
+
+    createUserTriggeredEventHandler = function(aHandler){
+      var activatedId;
+      return function(){
+          activatedId = $(this).find('.propId').text();
+          aHandler(activatedId);
+        };
+    };
+
+    /* Attach handler for user triggered event */
+    (function (){
+      var each;
+      var propertyName;
+      var className;
+
+      for (each in result) {
+        if (each.indexOf('activate') !== 0) {
+          continue;
+        }
+        if (!result.hasOwnProperty(each)) {
+          continue;
+        }
+        if (typeof(result[each]) !== 'function') {
+          continue;
+        }
+        propertyName = each.slice('activate'.length);
+
+        className = 'prop' + propertyName;
+
+        result.containerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(result[each]));
+      }
+
+    })();
 
     /* Wire model's properties to output fields in view */ 
     internalRender = function(aContainerElement, aModel){

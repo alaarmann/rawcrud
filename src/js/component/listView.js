@@ -19,10 +19,6 @@ module.exports = (function () {
       tableElement.append('<tr class="propHeadItems rawcrud-list"><td class="propId"></td><td class="propOwner"></td><td class="propReference"></td><td>Zeile , Spalte 3</td></tr>');
     containerElement.append(tableElement);
     containerElement.addClass('headItems');
-    containerElement.on('dblclick', '.propHeadItems', function(){
-      var selectedId = $(this).find('.propId').text();
-      parameters.editRecordAt(selectedId);
-    });
 
     return ;
   };

@@ -16,18 +16,32 @@ module.exports = (function () {
     var result;
     var component;
 
-    component = createBaseComponent();
-
-    component.containerElement = parameters.containerElement;
+    component = createBaseComponent(
+      // User triggered event
+      {
+        'containerElement' : parameters.containerElement,
+        'activateHeadItems' : function(aActivatedId){
+          parameters.editRecordAt(aActivatedId);
+        }
+      }
+    );
 
     getModel = parameters.getModel;
     workOn = parameters.workOn;
     
     createView(parameters);
+
+    // Model triggered event
     component.containerElement.on('render', function(){
       component.model = getModel();
       component.render();
     });
+
+    // User triggered event
+//    component.containerElement.on('dblclick', '.propHeadItems', function(){
+//      var selectedId = $(this).find('.propId').text();
+//      parameters.editRecordAt(selectedId);
+//    });
 
     component.model = getModel();
     component.render();
