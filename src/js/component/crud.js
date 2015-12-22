@@ -44,9 +44,10 @@ module.exports = (function () {
     });
 
     resultlistElement = containerElement.find('.result');
-    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : function(){ return {getHeadItems : repository.getHeadItems};}, editRecordAt : editRecordAt});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, editRecordAt : editRecordAt});
 
-    repository.retrieve();
+    // Initially populate resultList
+    resultlistElement.triggerHandler('render', {getHeadItems : function(){ return repository.retrieve(); }});
     
     result = {};
 

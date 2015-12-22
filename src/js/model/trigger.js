@@ -6,8 +6,8 @@
 
 var $ = require('jquery');
 
-module.exports = function(aEventName, aTarget){
+module.exports = function(aEventName, aTarget, aData){
   'use strict';
-  $('.' + aTarget).triggerHandler(aEventName);
+  $('.' + aTarget).triggerHandler(aEventName, aData);
 
 };

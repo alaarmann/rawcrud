@@ -6,7 +6,7 @@
 
 
 var createHeadItem = require('./headItem.js');
-var trigger = require('./trigger.js');
+var triggerEvent = require('./trigger.js');
 
 var idCounter = 1000000;
 var createId = function (){
@@ -50,7 +50,7 @@ module.exports = (function () {
           collection.id = createId();
         }
         headItems[collection.id] = createHeadItem(collection);
-        retrieve();
+        triggerEvent('render', 'headItems', {getHeadItems : function(){ return retrieve(); }});
         return;
     };
 
@@ -69,13 +69,11 @@ module.exports = (function () {
         headItemsRetrieved[each] = headItems[each];
       }
         
-      trigger('render', 'headItems');
-      return;
+      return getHeadItems();
     };
 
 
     result = {
-      getHeadItems : getHeadItems,
       save : save,
       startWorkOn : startWorkOn,
       createHeadItem : createHeadItem,

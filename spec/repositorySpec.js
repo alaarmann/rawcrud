@@ -34,12 +34,10 @@ describe("Repository", function() {
   });
 
   describe("create", function() {
-    it("creates a Repository, list of HeadItems is empty", function() {
+    it("creates a Repository", function() {
       var repository = this.repository;
 
       expect(repository).not.toBe(null);
-      expect(repository.getHeadItems()).not.toBe(null);
-      expect(repository.getHeadItems().length).toEqual(0);
     });
   });
 
@@ -67,8 +65,7 @@ describe("Repository", function() {
     it("saves a new item thereby creating it", function() {
       var repository = this.repository;
       repository.save(repository.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
-      repository.retrieve();
-      var headItems = repository.getHeadItems();
+      var headItems = repository.retrieve();
 
       expect(headItems.length).toEqual(this.headItemCount + 1);
       expect(headItems[this.headItemCount].getReference()).toEqual('20151124-006');
@@ -82,7 +79,7 @@ describe("Repository", function() {
       repository.retrieve();
       var anId = '1000001';
       var clonedHeadItem = repository.startWorkOn(anId);
-      var headItem = repository.getHeadItems()[0];
+      var headItem = repository.retrieve()[0];
 
       expect(clonedHeadItem).not.toBe(null);
       expect(clonedHeadItem).not.toBe(headItem);
@@ -96,17 +93,16 @@ describe("Repository", function() {
   describe("retrieve", function() {
     it("retrieves item list", function() {
       var repository = this.repository;
+      var headItems = repository.retrieve();
 
-      expect(repository.getHeadItems().length).toEqual(0);
-      repository.retrieve();
-      expect(repository.getHeadItems().length).toEqual(this.headItemCount);
+      expect(headItems.length).toEqual(this.headItemCount);
     });
 
-    it("triggers view to render headItems", function() {
+    it("does not trigger view to render headItems", function() {
       var repository = this.repository;
 
       repository.retrieve();
-      expect(this.triggerMock).toHaveBeenCalledWith('render', 'headItems');
+      expect(this.triggerMock).not.toHaveBeenCalledWith('render', 'headItems');
     });
   });
 });
