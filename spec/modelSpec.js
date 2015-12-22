@@ -1,14 +1,14 @@
 /*
- * Model Specification
+ * Repository Specification
 */
 
 /*globals require, describe, it, expect, beforeEach, afterEach, beforeAll, afterAll, jasmine */
 
 var mockery = require('mockery');
 
-describe("Model", function() {
+describe("Repository", function() {
   'use strict';
-  var allowables = ['../src/js/model/model.js', './headItem.js', './util.js', 'jquery'];
+  var allowables = ['../src/js/model/Repository.js', './headItem.js', './util.js', 'jquery'];
 
   beforeAll(function() {
     mockery.registerAllowables(allowables);
@@ -22,9 +22,9 @@ describe("Model", function() {
     mockery.enable({ useCleanCache: true });
     this.triggerMock = jasmine.createSpy('trigger');
     mockery.registerMock('./trigger.js', this.triggerMock);
-    var createModel = require('../src/js/model/model.js');
+    var createRepository = require('../src/js/model/Repository.js');
 
-    this.model = createModel();
+    this.repository = createRepository();
     this.headItemCount = 3;
   });
 
@@ -34,19 +34,19 @@ describe("Model", function() {
   });
 
   describe("create", function() {
-    it("creates a Model, list of HeadItems is empty", function() {
-      var model = this.model;
+    it("creates a Repository, list of HeadItems is empty", function() {
+      var repository = this.repository;
 
-      expect(model).not.toBe(null);
-      expect(model.getHeadItems()).not.toBe(null);
-      expect(model.getHeadItems().length).toEqual(0);
+      expect(repository).not.toBe(null);
+      expect(repository.getHeadItems()).not.toBe(null);
+      expect(repository.getHeadItems().length).toEqual(0);
     });
   });
 
   describe("createHeadItem", function() {
     it("creates a HeadItem according to given specification", function() {
-      var model = this.model;
-      var newHeadItem = model.createHeadItem({owner : 'NEMO', reference : '20151130-007'});
+      var repository = this.repository;
+      var newHeadItem = repository.createHeadItem({owner : 'NEMO', reference : '20151130-007'});
 
       expect(newHeadItem).not.toBe(null);
       expect(newHeadItem.getOwner()).toEqual('NEMO');
@@ -54,8 +54,8 @@ describe("Model", function() {
     });
 
     it("creates an empty HeadItem without specification", function() {
-      var model = this.model;
-      var newHeadItem = model.createHeadItem();
+      var repository = this.repository;
+      var newHeadItem = repository.createHeadItem();
 
       expect(newHeadItem).not.toBe(null);
       expect(newHeadItem.getOwner()).toBe(undefined);
@@ -65,10 +65,10 @@ describe("Model", function() {
 
   describe("save", function() {
     it("saves a new item thereby creating it", function() {
-      var model = this.model;
-      model.save(model.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
-      model.retrieve();
-      var headItems = model.getHeadItems();
+      var repository = this.repository;
+      repository.save(repository.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
+      repository.retrieve();
+      var headItems = repository.getHeadItems();
 
       expect(headItems.length).toEqual(this.headItemCount + 1);
       expect(headItems[this.headItemCount].getReference()).toEqual('20151124-006');
@@ -78,11 +78,11 @@ describe("Model", function() {
 
   describe("startWorkOn", function() {
     it("returns a clone of the HeadItem at given index", function() {
-      var model = this.model;
-      model.retrieve();
+      var repository = this.repository;
+      repository.retrieve();
       var anId = '1000001';
-      var clonedHeadItem = model.startWorkOn(anId);
-      var headItem = model.getHeadItems()[0];
+      var clonedHeadItem = repository.startWorkOn(anId);
+      var headItem = repository.getHeadItems()[0];
 
       expect(clonedHeadItem).not.toBe(null);
       expect(clonedHeadItem).not.toBe(headItem);
@@ -95,17 +95,17 @@ describe("Model", function() {
 
   describe("retrieve", function() {
     it("retrieves item list", function() {
-      var model = this.model;
+      var repository = this.repository;
 
-      expect(model.getHeadItems().length).toEqual(0);
-      model.retrieve();
-      expect(model.getHeadItems().length).toEqual(this.headItemCount);
+      expect(repository.getHeadItems().length).toEqual(0);
+      repository.retrieve();
+      expect(repository.getHeadItems().length).toEqual(this.headItemCount);
     });
 
     it("triggers view to render headItems", function() {
-      var model = this.model;
+      var repository = this.repository;
 
-      model.retrieve();
+      repository.retrieve();
       expect(this.triggerMock).toHaveBeenCalledWith('render', 'headItems');
     });
   });

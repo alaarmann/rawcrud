@@ -12,10 +12,10 @@ var createView = require('./crudView.js');
 module.exports = (function () {
   'use strict';
   var editorElement;
-  var model;
+  var repository;
 
   var editRecordAt = function (aId){
-    var modelToWorkOn = model.startWorkOn(aId);
+    var modelToWorkOn = repository.startWorkOn(aId);
     editorElement.triggerHandler('open', [ modelToWorkOn ]);
     
   };
@@ -30,23 +30,23 @@ module.exports = (function () {
     var view;
 
     containerElement = parameters.containerElement;
-    model = parameters.model;
+    repository = parameters.repository;
 
     view = createView(containerElement);
 
     editorElement = containerElement.find('.editor');
-    editorComponent = createEditor({containerElement : editorElement, model : model.save, onsuccess : model.retrieve});
+    editorComponent = createEditor({containerElement : editorElement, saveToRepository : repository.save});
 
     buttonElement = containerElement.find('.button');
     buttonElement.button().on( "click", function() {
-      var newModelToWorkOn = model.createHeadItem();
+      var newModelToWorkOn = repository.createHeadItem();
       editorElement.triggerHandler('open', [ newModelToWorkOn ]);
     });
 
     resultlistElement = containerElement.find('.result');
-    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : function(){ return {getHeadItems : model.getHeadItems};}, editRecordAt : editRecordAt});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, getModel : function(){ return {getHeadItems : repository.getHeadItems};}, editRecordAt : editRecordAt});
 
-    model.retrieve();
+    repository.retrieve();
     
     result = {};
 

@@ -10,18 +10,18 @@ var $ = require('jquery');
 require('jquery-ui');
 
 var createCrud = require('./component/crud.js');
-var createModel = require('./model/model.js');
+var createRepository = require('./model/Repository.js');
 
 
 $(function() {
   'use strict';
   var crudComponent;
-  var model;
+  var repository;
 //  $( ".search .options" ).selectable();
-  model = createModel();
+  repository = createRepository();
   crudComponent = createCrud({
     containerElement : $('#app .main'),
-    model : model
+    repository : repository
   });
 });
 

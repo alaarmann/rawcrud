@@ -1,5 +1,5 @@
 /*
- * Model (container) 
+ * Management Repository 
 */
 
 /*globals require, module */

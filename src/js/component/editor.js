@@ -23,7 +23,7 @@ module.exports = (function () {
       }
     );
 
-    save = parameters.model;
+    save = parameters.saveToRepository;
 
     dialog = createView(component.containerElement);
 
