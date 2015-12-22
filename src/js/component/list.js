@@ -37,12 +37,6 @@ module.exports = (function () {
       component.render();
     });
 
-    // User triggered event
-//    component.containerElement.on('dblclick', '.propHeadItems', function(){
-//      var selectedId = $(this).find('.propId').text();
-//      parameters.editRecordAt(selectedId);
-//    });
-
     component.model = getModel();
     component.render();
     result = {};
