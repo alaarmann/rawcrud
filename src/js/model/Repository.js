@@ -6,7 +6,6 @@
 
 
 var createHeadItem = require('./headItem.js');
-var triggerEvent = require('./trigger.js');
 
 var idCounter = 1000000;
 var createId = function (){
@@ -50,7 +49,6 @@ module.exports = (function () {
           collection.id = createId();
         }
         headItems[collection.id] = createHeadItem(collection);
-        triggerEvent('render', 'headItems', {getHeadItems : function(){ return retrieve(); }});
         return;
     };
 

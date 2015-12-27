@@ -11,19 +11,18 @@ var createView = require('./crudView.js');
 
 module.exports = (function () {
   'use strict';
-  var editorElement;
+  var resultlistElement;
   var repository;
 
   var editRecordAt = function (aId){
     var modelToWorkOn = repository.startWorkOn(aId);
-    editorElement.triggerHandler('open', [ modelToWorkOn ]);
-    
+    resultlistElement.trigger('open', {target : 'editor', data : [ modelToWorkOn ]});   
   };
 
   var create = function (parameters){
     var containerElement;
     var editorComponent;
-    var resultlistElement;
+    var editorElement;
     var resultlistComponent;
     var result;
     var buttonElement;
@@ -35,19 +34,23 @@ module.exports = (function () {
     view = createView(containerElement);
 
     editorElement = containerElement.find('.editor');
+    buttonElement = containerElement.find('.button');
+    resultlistElement = containerElement.find('.result');
+
+
     editorComponent = createEditor({containerElement : editorElement, saveToRepository : repository.save});
 
-    buttonElement = containerElement.find('.button');
     buttonElement.button().on( "click", function() {
       var newModelToWorkOn = repository.createHeadItem();
-      editorElement.triggerHandler('open', [ newModelToWorkOn ]);
+      // let open event bubble up to navigator
+      resultlistElement.trigger('open', {target : 'editor', data : [ newModelToWorkOn ]});
     });
 
-    resultlistElement = containerElement.find('.result');
-    resultlistComponent = createResultlist({containerElement : resultlistElement, editRecordAt : editRecordAt});
+    
+    resultlistComponent = createResultlist({containerElement : resultlistElement, editRecordAt : editRecordAt, retrieve : repository.retrieve});
 
-    // Initially populate resultList
-    resultlistElement.triggerHandler('render', {getHeadItems : function(){ return repository.retrieve(); }});
+    // Initially populate resultList --> move this to navigator!
+    resultlistElement.triggerHandler('show');
     
     result = {};
 

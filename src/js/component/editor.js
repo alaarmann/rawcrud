@@ -31,6 +31,7 @@ module.exports = (function () {
       component.evaluate();
       save(component.model);
       dialog.close();
+      component.containerElement.trigger('close');
     };
 
     component.containerElement.on( "ua.process", function( event ) {

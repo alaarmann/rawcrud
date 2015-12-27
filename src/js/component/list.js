@@ -26,9 +26,9 @@ module.exports = (function () {
 
     createView(parameters);
 
-    // Model triggered event
-    component.containerElement.on('render', function(aEvent, aModel){
-      component.model = aModel;
+    // Navigation triggered event
+    component.containerElement.on('show', function(){
+      component.model = {getHeadItems : function(){ return parameters.retrieve(); }};
       component.render();
     });
 
