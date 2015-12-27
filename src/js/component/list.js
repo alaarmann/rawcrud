@@ -26,8 +26,8 @@ module.exports = (function () {
 
     createView(parameters);
 
-    // Navigation triggered event
-    component.containerElement.on('show', function(){
+    // Navigation triggered events
+    component.containerElement.on('open show', function(){
       component.model = {getHeadItems : function(){ return parameters.retrieve(); }};
       component.render();
     });

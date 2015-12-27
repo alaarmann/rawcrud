@@ -44,9 +44,6 @@ module.exports = (function () {
     
     resultlistComponent = createResultlist({containerElement : resultlistElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve});
 
-    // Initially populate resultList --> move this to navigator!
-    resultlistElement.triggerHandler('show');
-    
     result = {};
 
     return result;

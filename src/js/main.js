@@ -27,7 +27,11 @@ $(function() {
     repository : repository
   });
 
+  // attach navigator to topmost element
   createNavigator(containerElement);
+
+  // start retriever
+  containerElement.trigger('open', {target : 'result'});
 });
 
  

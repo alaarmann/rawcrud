@@ -69,7 +69,7 @@ module.exports = (function () {
         }
 
         propertyName = each.slice('get'.length);
-        console.log('propertyName: ' + propertyName);
+        //console.log('propertyName: ' + propertyName);
         className = 'prop' + propertyName;
         value = aModel[each]();
         // Treat list value differently than single value

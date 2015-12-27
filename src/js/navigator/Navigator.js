@@ -15,20 +15,28 @@ module.exports = (function () {
     var open;
     var close;
     var navigationHistory = {};
-
+    var onopen;
     console.log('Creating navigator on ' + aContainerElement.attr('class'));
-    /*
-     * on open navigate to new screen and open it
-     */
-    // use event delegation-syntax, otherwise eventsource is not true eventsource
-    aContainerElement.on('open', 'div', function(aEvent, aEventData){
+
+    onopen = function(aEvent, aEventData){
       var fromScreen = $(this).attr('class').split(/\s+/)[0];
       var toScreen =  aEventData.target;
 
       navigationHistory[toScreen] = {fromScreen : fromScreen};
       console.log('Navigating from ' + fromScreen + ' to ' + toScreen);
       aContainerElement.find('.' + toScreen).triggerHandler('open', aEventData.data);
-    });
+      // don't let event bubble up further
+      return false;
+    };
+
+    /*
+     * on open navigate to new screen and open it
+     */
+    // use event delegation-syntax, otherwise eventsource is not true eventsource
+    aContainerElement.on('open', 'div', onopen);
+
+    // in case the event is triggered on navigator-element itself, i.e. on start up
+    aContainerElement.on('open', onopen);
 
     /*
      * on close navigate back to previous screen and show it
