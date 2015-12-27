@@ -1,5 +1,5 @@
 /*
- * List View 
+ * Retriever View 
 */
 
 /*globals require, module */

@@ -5,7 +5,7 @@
 /*globals require, module */
 
 var createEditor = require('./editor.js');
-var createResultlist = require('./list.js');
+var createRetriever = require('./RetrieverPresenter.js');
 var createView = require('./crudView.js');
 
 
@@ -13,12 +13,12 @@ module.exports = (function () {
   'use strict';
 
   var create = function (parameters){
-    var resultlistElement;
+    var retrieverElement;
     var repository;
     var containerElement;
     var editorComponent;
     var editorElement;
-    var resultlistComponent;
+    var retrieverComponent;
     var result;
     var buttonElement;
     var view;
@@ -30,7 +30,7 @@ module.exports = (function () {
 
     editorElement = containerElement.find('.editor');
     buttonElement = containerElement.find('.button');
-    resultlistElement = containerElement.find('.result');
+    retrieverElement = containerElement.find('.result');
 
 
     editorComponent = createEditor({containerElement : editorElement, saveToRepository : repository.save});
@@ -38,11 +38,11 @@ module.exports = (function () {
     buttonElement.button().on( "click", function() {
       var newModelToWorkOn = repository.createHeadItem();
       // let open event bubble up to navigator
-      resultlistElement.trigger('open', {target : 'editor', data : [ newModelToWorkOn ]});
+      retrieverElement.trigger('open', {target : 'editor', data : [ newModelToWorkOn ]});
     });
 
     
-    resultlistComponent = createResultlist({containerElement : resultlistElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve});
+    retrieverComponent = createRetriever({containerElement : retrieverElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve});
 
     result = {};
 

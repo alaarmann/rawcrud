@@ -1,10 +1,10 @@
 /*
- * List Component 
+ * Retriever Presenter 
 */
 
 /*globals require, module */
 
-var createView = require('./listView.js');
+var createView = require('./RetrieverView.js');
 var createBaseComponent = require('./BaseComponent.js');
 
 module.exports = (function () {
