@@ -11,15 +11,10 @@ var createView = require('./crudView.js');
 
 module.exports = (function () {
   'use strict';
-  var resultlistElement;
-  var repository;
-
-  var editRecordAt = function (aId){
-    var modelToWorkOn = repository.startWorkOn(aId);
-    resultlistElement.trigger('open', {target : 'editor', data : [ modelToWorkOn ]});   
-  };
 
   var create = function (parameters){
+    var resultlistElement;
+    var repository;
     var containerElement;
     var editorComponent;
     var editorElement;
@@ -47,7 +42,7 @@ module.exports = (function () {
     });
 
     
-    resultlistComponent = createResultlist({containerElement : resultlistElement, editRecordAt : editRecordAt, retrieve : repository.retrieve});
+    resultlistComponent = createResultlist({containerElement : resultlistElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve});
 
     // Initially populate resultList --> move this to navigator!
     resultlistElement.triggerHandler('show');

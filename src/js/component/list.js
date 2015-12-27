@@ -19,7 +19,7 @@ module.exports = (function () {
       {
         'containerElement' : parameters.containerElement,
         'activateHeadItems' : function(aActivatedId){
-          parameters.editRecordAt(aActivatedId);
+          editRecordAt(aActivatedId);
         }
       }
     );
@@ -31,6 +31,13 @@ module.exports = (function () {
       component.model = {getHeadItems : function(){ return parameters.retrieve(); }};
       component.render();
     });
+
+    var editRecordAt = function (aId){
+      var modelToWorkOn = parameters.startWorkOn(aId);
+      component.containerElement.trigger('open', {target : 'editor', data : [ modelToWorkOn ]});   
+    };
+
+
 
     result = {};
 
