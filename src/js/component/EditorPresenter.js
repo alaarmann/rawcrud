@@ -4,7 +4,7 @@
 
 /*globals require, module */
 
-var createView = require('./editorView.js');
+var createView = require('./EditorView.js');
 var createBaseComponent = require('./BaseComponent.js');
 
 module.exports = (function () {

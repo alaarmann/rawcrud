@@ -4,7 +4,7 @@
 
 /*globals require, module */
 
-var createEditor = require('./editor.js');
+var createEditor = require('./EditorPresenter.js');
 var createRetriever = require('./RetrieverPresenter.js');
 var createView = require('./crudView.js');
 
