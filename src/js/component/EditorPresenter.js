@@ -13,7 +13,7 @@ module.exports = (function () {
   var create = function (parameters){
     var save;
     var result;
-    var dialog;
+    var view;
     var processForm;
     var component;
 
@@ -25,12 +25,12 @@ module.exports = (function () {
 
     save = parameters.saveToRepository;
 
-    dialog = createView(component.containerElement);
+    view = createView(component.containerElement);
 
     processForm = function(){
       component.evaluate();
       save(component.model);
-      dialog.close();
+      view.close();
       component.containerElement.trigger('close');
     };
 
@@ -43,7 +43,7 @@ module.exports = (function () {
       // model is set HERE!
       component.model = aModelToWorkOn;
       component.render();
-      dialog.open();
+      view.open();
     });
 
     result = {};
