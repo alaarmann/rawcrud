@@ -9,7 +9,7 @@ var $ = require('jquery');
   
 require('jquery-ui');
 
-var createCrud = require('./component/crud.js');
+var createCrud = require('./component/CrudPresenter.js');
 var createRepository = require('./model/Repository.js');
 var createNavigator = require('./navigator/Navigator.js');
 

@@ -6,7 +6,7 @@
 
 var createEditor = require('./EditorPresenter.js');
 var createRetriever = require('./RetrieverPresenter.js');
-var createView = require('./crudView.js');
+var createView = require('./CrudView.js');
 
 
 module.exports = (function () {
