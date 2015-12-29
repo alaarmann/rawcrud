@@ -42,14 +42,20 @@ module.exports = (function () {
       appendTo : '#' + containerElementId,
       close: function() {
       },
-      buttons: {
-        'Create': function() {
-          aContainerElement.triggerHandler('ua.process');
+      buttons: [
+        {
+          text: "OK",
+          'class' : 'actionProcess',
+          click : function(){} // Real action is bound in BasePresenter This is to avoid error in console: 'click is undefined'          
         },
-        'Cancel': function() {
-          close();
+        {
+          text: "Cancel",
+          'class' : 'actionCancel',
+          click : function(){
+            close();
+          }
         }
-      }
+      ]
     });
 
     // submit triggered by e.g. enter while dialog has focus

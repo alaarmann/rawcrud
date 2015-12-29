@@ -13,6 +13,7 @@ module.exports = (function () {
     var result = aThisComponent || {};
     var internalRender;
     var createUserTriggeredEventHandler;
+    var createUserTriggeredChooseEventHandler;
 
     createUserTriggeredEventHandler = function(aHandler){
       var activatedId;
@@ -43,6 +44,38 @@ module.exports = (function () {
         className = 'prop' + propertyName;
 
         result.containerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(result[each]));
+      }
+
+    })();
+
+    createUserTriggeredChooseEventHandler = function(aHandler){
+      return function(){
+          aHandler();
+          return false;
+        };
+    };
+
+    (function (){
+      var each;
+      var propertyName;
+      var className;
+
+      for (each in result) {
+        if (each.indexOf('choose') !== 0) {
+          continue;
+        }
+        if (!result.hasOwnProperty(each)) {
+          continue;
+        }
+        if (typeof(result[each]) !== 'function') {
+          continue;
+        }
+        propertyName = each.slice('choose'.length);
+
+        className = 'action' + propertyName;
+        console.log('Adding handler to ' + className);
+
+        result.containerElement.on('click', '.' + className, createUserTriggeredChooseEventHandler(result[each]));
       }
 
     })();

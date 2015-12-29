@@ -19,7 +19,12 @@ module.exports = (function () {
 
     component = createBaseComponent(
       {
-        'containerElement' : parameters.containerElement
+        'containerElement' : parameters.containerElement,
+        // User triggered action
+        'chooseProcess' : function(){
+          processForm();
+        }
+
       }
     );
 
@@ -30,15 +35,19 @@ module.exports = (function () {
     processForm = function(){
       component.evaluate();
       save(component.model);
+
+      // Screen flow
       view.close();
       component.containerElement.trigger('close');
     };
 
-    component.containerElement.on( "ua.process", function( event ) {
-      event.preventDefault();
-      processForm();
-    });
+    
+//    component.containerElement.on( "ua.process", function( event ) {
+//      event.preventDefault();
+//      processForm();
+//    });
 
+    // Screen flow, Navigation triggered action
     component.containerElement.on('open', function(aEvent, aModelToWorkOn){
       // model is set HERE!
       component.model = aModelToWorkOn;
