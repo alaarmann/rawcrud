@@ -26,7 +26,7 @@ module.exports = (function () {
             '<input type="text" name="owner" id="owner" value="" class="propOwner text ui-widget-content ui-corner-all"/>' +
             '<label for="reference">Reference</label>' +
             '<input type="text" name="reference" id="reference" value="" class="propReference text ui-widget-content ui-corner-all"/>' +
-            '<input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>' +
+            '<input type="submit" tabindex="-1" class="invisible"/>' +
           '</fieldset>' +
         '</form>' +
       '</div>'
@@ -56,12 +56,6 @@ module.exports = (function () {
           }
         }
       ]
-    });
-
-    // submit triggered by e.g. enter while dialog has focus
-    aContainerElement.find('form').on( "submit", function( event ) {
-      event.preventDefault();
-      aContainerElement.triggerHandler('ua.process');
     });
 
     open = function() {

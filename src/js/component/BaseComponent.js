@@ -13,7 +13,7 @@ module.exports = (function () {
     var result = aThisComponent || {};
     var internalRender;
     var createUserTriggeredEventHandler;
-    var createUserTriggeredChooseEventHandler;
+    var createUserTriggeredActionEventHandler;
 
     createUserTriggeredEventHandler = function(aHandler){
       var activatedId;
@@ -48,7 +48,7 @@ module.exports = (function () {
 
     })();
 
-    createUserTriggeredChooseEventHandler = function(aHandler){
+    createUserTriggeredActionEventHandler = function(aHandler){
       return function(){
           aHandler();
           return false;
@@ -57,11 +57,10 @@ module.exports = (function () {
 
     (function (){
       var each;
-      var propertyName;
       var className;
 
       for (each in result) {
-        if (each.indexOf('choose') !== 0) {
+        if (each.indexOf('action') !== 0) {
           continue;
         }
         if (!result.hasOwnProperty(each)) {
@@ -70,15 +69,19 @@ module.exports = (function () {
         if (typeof(result[each]) !== 'function') {
           continue;
         }
-        propertyName = each.slice('choose'.length);
 
-        className = 'action' + propertyName;
-        console.log('Adding handler to ' + className);
+        if (each === 'actionDefault') {
+          result.containerElement.on( 'submit', 'form', createUserTriggeredActionEventHandler(result[each]));
+        } else {
+          className = each;
 
-        result.containerElement.on('click', '.' + className, createUserTriggeredChooseEventHandler(result[each]));
+          result.containerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(result[each]));
+        }
+
       }
 
     })();
+
 
     /* Wire model's properties to output fields in view */ 
     internalRender = function(aContainerElement, aModel){

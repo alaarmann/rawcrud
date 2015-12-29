@@ -20,10 +20,13 @@ module.exports = (function () {
     component = createBaseComponent(
       {
         'containerElement' : parameters.containerElement,
-        // User triggered action
-        'chooseProcess' : function(){
+        // User triggered action, will be bound to .actionProcess
+        'actionProcess' : function(){
           processForm();
-        }
+        },
+        'actionDefault' : function(){
+          processForm();
+        },
 
       }
     );
@@ -40,12 +43,6 @@ module.exports = (function () {
       view.close();
       component.containerElement.trigger('close');
     };
-
-    
-//    component.containerElement.on( "ua.process", function( event ) {
-//      event.preventDefault();
-//      processForm();
-//    });
 
     // Screen flow, Navigation triggered action
     component.containerElement.on('open', function(aEvent, aModelToWorkOn){
