@@ -13,7 +13,6 @@ module.exports = (function () {
   var create = function (parameters){
     var save;
     var result;
-    var view;
     var processForm;
     var component;
 
@@ -29,33 +28,21 @@ module.exports = (function () {
         },
         'actionCancel' : function(){
           // Screen flow
-          view.close();
-          component.containerElement.trigger('close');
-        }
-
+          component.close();
+        },
+        'view' : createView(parameters.containerElement)
       }
     );
 
     save = parameters.saveToRepository;
-
-    view = createView(component.containerElement);
 
     processForm = function(){
       component.evaluate();
       save(component.model);
 
       // Screen flow
-      view.close();
-      component.containerElement.trigger('close');
+      component.close();
     };
-
-    // Screen flow, Navigation triggered action
-    component.containerElement.on('open', function(aEvent, aModelToWorkOn){
-      // model is set HERE!
-      component.model = aModelToWorkOn;
-      component.render();
-      view.open();
-    });
 
     result = {};
 

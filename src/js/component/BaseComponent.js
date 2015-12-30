@@ -14,6 +14,8 @@ module.exports = (function () {
     var internalRender;
     var createUserTriggeredEventHandler;
     var createUserTriggeredActionEventHandler;
+    var open;
+    var close;
 
     createUserTriggeredEventHandler = function(aHandler){
       var activatedId;
@@ -94,6 +96,7 @@ module.exports = (function () {
       var newItem;
       var i;
 
+
       for (each in aModel) {
         if (each.indexOf('get') !== 0) {
           continue;
@@ -153,6 +156,34 @@ module.exports = (function () {
       }
 
     };
+
+    // Screen flow, Navigation triggered action
+    open = function(aEvent, aModelToWorkOn){
+      // model is set HERE!
+      result.model = aModelToWorkOn;
+      result.render();
+      if (result.view && typeof result.view.open === 'function'){
+        result.view.open();
+      }
+    };
+
+    result.open = open;
+    result.containerElement.on('open', function(aEvent, aModelToWorkOn){
+      result.open(aEvent, aModelToWorkOn);
+      //TODO: aEvent.stopPropagation(); This prevents dialog from opening
+      // Presumably conflict with dialog-widget's open-event
+    });
+
+
+    // Screen flow
+    close = function(){
+      if (result.view && typeof result.view.close === 'function'){
+        result.view.close();
+      }
+      result.containerElement.trigger('close');
+    };
+    
+    result.close = close;
 
     return result;
   };
