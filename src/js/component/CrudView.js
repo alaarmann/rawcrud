@@ -11,14 +11,10 @@ module.exports = (function () {
 
   var create = function (aContainerElement){
     var editorElement;
-    var buttonElement;
     var resultlistElement;
 
     editorElement = $('<div/>').addClass('editor');
     aContainerElement.append(editorElement);
-
-    buttonElement = $('<div>Create HeadItem</div>').addClass('button');
-    aContainerElement.append(buttonElement);
 
     resultlistElement = $('<div/>').addClass('result');
     aContainerElement.append(resultlistElement);

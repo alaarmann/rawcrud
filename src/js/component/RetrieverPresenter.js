@@ -22,6 +22,10 @@ module.exports = (function () {
         'activateHeadItems' : function(aActivatedId){
           editRecordAt(aActivatedId);
         },
+        'actionCreate' : function(){
+          var newModelToWorkOn = parameters.createHeadItem();
+          component.navigateByOpen('editor', [ newModelToWorkOn ]);
+        },
         'view' : createView(parameters)
       }
     );

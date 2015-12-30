@@ -20,7 +20,6 @@ module.exports = (function () {
     var editorElement;
     var retrieverComponent;
     var result;
-    var buttonElement;
     var view;
 
     containerElement = parameters.containerElement;
@@ -29,20 +28,12 @@ module.exports = (function () {
     view = createView(containerElement);
 
     editorElement = containerElement.find('.editor');
-    buttonElement = containerElement.find('.button');
     retrieverElement = containerElement.find('.result');
 
 
     editorComponent = createEditor({containerElement : editorElement, saveToRepository : repository.save});
 
-    buttonElement.button().on( "click", function() {
-      var newModelToWorkOn = repository.createHeadItem();
-      // let open event bubble up to navigator
-      retrieverElement.trigger('open', {target : 'editor', data : [ newModelToWorkOn ]});
-    });
-
-    
-    retrieverComponent = createRetriever({containerElement : retrieverElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve});
+    retrieverComponent = createRetriever({containerElement : retrieverElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve, createHeadItem : repository.createHeadItem});
 
     result = {};
 

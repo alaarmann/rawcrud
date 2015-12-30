@@ -12,7 +12,17 @@ module.exports = (function () {
   var tableElement;
 
   var create = function (parameters){
+    var creatorElement;
     containerElement = parameters.containerElement;
+
+    creatorElement = $('<div>Create HeadItem</div>').addClass('button');
+    containerElement.append(creatorElement);
+    creatorElement.button().on( 'click', function() {
+      containerElement.triggerHandler('actionCreate');
+      return false;
+    });
+
+
 
     tableElement = $('<table/>');
     tableElement.append('<tr><th  class="propId">Id (hidden)</th><th>Ueberschrift Spalte 1</th><th>Ueberschrift Spalte 2</th><th>Ueberschrift Spalte 3</th></tr>');
