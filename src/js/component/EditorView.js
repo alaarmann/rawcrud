@@ -40,7 +40,12 @@ module.exports = (function () {
       width: 350,
       modal: true,
       appendTo : '#' + containerElementId,
-      close: function() {
+      close: function( aEvent ) {
+        // event triggered by built-in close (X)-Button
+        if ( aEvent.originalEvent ) {
+            aContainerElement.triggerHandler('actionCancel');
+            return false;
+        }
       },
       buttons: [
         {
@@ -51,7 +56,7 @@ module.exports = (function () {
         {
           text: "Cancel",
           click : function(){
-            aContainerElement.triggerHandler('actionCancel');
+            aContainerElement.triggerHandler('actionCancel'); // presenter binds actions to events also
           }
         }
       ]
