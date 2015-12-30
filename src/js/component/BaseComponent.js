@@ -16,6 +16,7 @@ module.exports = (function () {
     var createUserTriggeredActionEventHandler;
     var open;
     var close;
+    var navigateByOpen;
 
     createUserTriggeredEventHandler = function(aHandler){
       var activatedId;
@@ -190,6 +191,11 @@ module.exports = (function () {
     };
     
     result.close = close;
+
+    navigateByOpen = function(aTarget, aData){
+      result.containerElement.trigger('open', {target : aTarget, data : aData});   
+    };
+    result.navigateByOpen = navigateByOpen;
 
     return result;
   };

@@ -34,10 +34,8 @@ module.exports = (function () {
 
     var editRecordAt = function (aId){
       var modelToWorkOn = parameters.startWorkOn(aId);
-      component.containerElement.trigger('open', {target : 'editor', data : [ modelToWorkOn ]});   
+      component.navigateByOpen('editor', [ modelToWorkOn ]);
     };
-
-
 
     result = {};
 
