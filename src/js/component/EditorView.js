@@ -50,9 +50,8 @@ module.exports = (function () {
         },
         {
           text: "Cancel",
-          'class' : 'actionCancel',
           click : function(){
-            close();
+            aContainerElement.triggerHandler('actionCancel');
           }
         }
       ]

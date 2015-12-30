@@ -27,6 +27,11 @@ module.exports = (function () {
         'actionDefault' : function(){
           processForm();
         },
+        'actionCancel' : function(){
+          // Screen flow
+          view.close();
+          component.containerElement.trigger('close');
+        }
 
       }
     );

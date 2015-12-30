@@ -76,6 +76,7 @@ module.exports = (function () {
           className = each;
 
           result.containerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(result[each]));
+          result.containerElement.on(each, createUserTriggeredActionEventHandler(result[each]));
         }
 
       }
