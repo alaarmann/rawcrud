@@ -13,6 +13,7 @@ module.exports = (function () {
   var create = function (parameters){
     var result;
     var component;
+    var processForm;
 
     component = createBaseComponent(
       // User triggered event
@@ -20,17 +21,16 @@ module.exports = (function () {
         'containerElement' : parameters.containerElement,
         'activateHeadItems' : function(aActivatedId){
           editRecordAt(aActivatedId);
-        }
+        },
+        'view' : createView(parameters)
       }
     );
 
-    createView(parameters);
-
-    // Navigation triggered events
-    component.containerElement.on('open show', function(){
+    processForm = function(){
       component.model = {getHeadItems : function(){ return parameters.retrieve(); }};
       component.render();
-    });
+    };
+    component.show = processForm;
 
     var editRecordAt = function (aId){
       var modelToWorkOn = parameters.startWorkOn(aId);

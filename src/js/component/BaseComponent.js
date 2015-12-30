@@ -174,6 +174,12 @@ module.exports = (function () {
       // Presumably conflict with dialog-widget's open-event
     });
 
+    result.containerElement.on('show', function(aEvent, aModelToWorkOn){
+      if (typeof result.show === 'function'){
+        result.show(aEvent, aModelToWorkOn);
+      }
+      return false;
+    });
 
     // Screen flow
     close = function(){

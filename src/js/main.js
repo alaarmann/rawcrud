@@ -31,7 +31,7 @@ $(function() {
   createNavigator(containerElement);
 
   // start retriever
-  containerElement.trigger('open', {target : 'result'});
+  containerElement.trigger('show', {target : 'result'});
 });
 
  

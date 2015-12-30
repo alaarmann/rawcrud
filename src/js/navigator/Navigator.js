@@ -16,6 +16,7 @@ module.exports = (function () {
     var close;
     var navigationHistory = {};
     var onopen;
+    var onshow;
     console.log('Creating navigator on ' + aContainerElement.attr('class'));
 
     onopen = function(aEvent, aEventData){
@@ -23,8 +24,19 @@ module.exports = (function () {
       var toScreen =  aEventData.target;
 
       navigationHistory[toScreen] = {fromScreen : fromScreen};
-      console.log('Navigating from ' + fromScreen + ' to ' + toScreen);
+      console.log('Navigating from ' + fromScreen + ' to open ' + toScreen);
       aContainerElement.find('.' + toScreen).triggerHandler('open', aEventData.data);
+      // don't let event bubble up further
+      return false;
+    };
+
+    onshow = function(aEvent, aEventData){
+      var fromScreen = $(this).attr('class').split(/\s+/)[0];
+      var toScreen =  aEventData.target;
+
+      navigationHistory[toScreen] = {fromScreen : fromScreen};
+      console.log('Navigating from ' + fromScreen + ' to show ' + toScreen);
+      aContainerElement.find('.' + toScreen).triggerHandler('show');
       // don't let event bubble up further
       return false;
     };
@@ -34,9 +46,11 @@ module.exports = (function () {
      */
     // use event delegation-syntax, otherwise eventsource is not true eventsource
     aContainerElement.on('open', 'div', onopen);
+    aContainerElement.on('show', 'div', onshow);
 
     // in case the event is triggered on navigator-element itself, i.e. on start up
     aContainerElement.on('open', onopen);
+    aContainerElement.on('show', onshow);
 
     /*
      * on close navigate back to previous screen and show it
