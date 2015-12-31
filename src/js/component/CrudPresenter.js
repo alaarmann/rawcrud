@@ -27,6 +27,7 @@ module.exports = (function () {
 
     view = createView(containerElement);
 
+    // TODO: move cascading component-creation to separate module. No jquery dependency here!
     editorElement = containerElement.find('.editor');
     retrieverElement = containerElement.find('.result');
 
