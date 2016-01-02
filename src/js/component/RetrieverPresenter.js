@@ -6,6 +6,7 @@
 
 var createView = require('./RetrieverView.js');
 var createBaseComponent = require('./BaseComponent.js');
+var makeNavigationCapable = require('./NavigationCapable.js');
 var repository = require('../model/repository.js');
 
 module.exports = (function () {
@@ -25,6 +26,7 @@ module.exports = (function () {
     };
     component.view = createView(aContainerElement);
     createBaseComponent.apply(component, [aContainerElement]);
+    makeNavigationCapable.apply(component, [aContainerElement]);
 
     processForm = function(){
       component.model = {getHeadItems : function(){ return repository.retrieve(); }};
