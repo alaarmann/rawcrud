@@ -27,7 +27,7 @@ module.exports = (function () {
     };
     component.actionCancel = function(){
       // Screen flow
-      component.close();
+      component.closeScreen();
     };
     component.view = createView(aContainerElement);
 
@@ -41,7 +41,7 @@ module.exports = (function () {
       save(component.model);
 
       // Screen flow
-      component.close();
+      component.closeScreen();
     };
 
     return component;

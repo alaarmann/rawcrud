@@ -25,7 +25,7 @@ $(function() {
   createNavigator(containerElement);
 
   // start retriever
-  containerElement.trigger('show', {target : 'result'});
+  containerElement.trigger('showScreen', {target : 'result'});
 });
 
  

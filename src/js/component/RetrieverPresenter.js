@@ -22,7 +22,7 @@ module.exports = (function () {
     };
     component.actionCreate = function(){
       var newModelToWorkOn = repository.createHeadItem();
-      component.navigateByOpen('editor', [ newModelToWorkOn ]);
+      component.openNewScreen('editor', [ newModelToWorkOn ]);
     };
     component.view = createView(aContainerElement);
     createBaseComponent.apply(component, [aContainerElement]);
@@ -32,11 +32,11 @@ module.exports = (function () {
       component.model = {getHeadItems : function(){ return repository.retrieve(); }};
       component.render();
     };
-    component.show = processForm;
+    component.showScreen = processForm;
 
     var editRecordAt = function (aId){
       var modelToWorkOn = repository.startWorkOn(aId);
-      component.navigateByOpen('editor', [ modelToWorkOn ]);
+      component.openNewScreen('editor', [ modelToWorkOn ]);
     };
 
     return component;

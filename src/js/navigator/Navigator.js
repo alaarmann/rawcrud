@@ -11,32 +11,29 @@ module.exports = (function () {
   'use strict';
 
   var create = function (aContainerElement){
-    var result;
-    var open;
-    var close;
     var navigationHistory = {};
-    var onopen;
-    var onshow;
+    var openScreen;
+    var showScreen;
     console.log('Creating navigator on ' + aContainerElement.attr('class'));
 
-    onopen = function(aEvent, aEventData){
+    openScreen = function(aEvent, aEventData){
       var fromScreen = $(this).attr('class').split(/\s+/)[0];
       var toScreen =  aEventData.target;
 
       navigationHistory[toScreen] = {fromScreen : fromScreen};
       console.log('Navigating from ' + fromScreen + ' to open ' + toScreen);
-      aContainerElement.find('.' + toScreen).triggerHandler('open', aEventData.data);
+      aContainerElement.find('.' + toScreen).triggerHandler('openScreen', aEventData.data);
       // don't let event bubble up further
       return false;
     };
 
-    onshow = function(aEvent, aEventData){
+    showScreen = function(aEvent, aEventData){
       var fromScreen = $(this).attr('class').split(/\s+/)[0];
       var toScreen =  aEventData.target;
 
       navigationHistory[toScreen] = {fromScreen : fromScreen};
       console.log('Navigating from ' + fromScreen + ' to show ' + toScreen);
-      aContainerElement.find('.' + toScreen).triggerHandler('show');
+      aContainerElement.find('.' + toScreen).triggerHandler('showScreen');
       // don't let event bubble up further
       return false;
     };
@@ -45,32 +42,27 @@ module.exports = (function () {
      * on open navigate to new screen and open it
      */
     // use event delegation-syntax, otherwise eventsource is not true eventsource
-    aContainerElement.on('open', 'div', onopen);
-    aContainerElement.on('show', 'div', onshow);
+    aContainerElement.on('openScreen', 'div', openScreen);
+    aContainerElement.on('showScreen', 'div', showScreen);
 
     // in case the event is triggered on navigator-element itself, i.e. on start up
-    aContainerElement.on('open', onopen);
-    aContainerElement.on('show', onshow);
+    aContainerElement.on('openScreen', openScreen);
+    aContainerElement.on('showScreen', showScreen);
 
     /*
      * on close navigate back to previous screen and show it
      */
-    aContainerElement.on('close', 'div', function(){
+    aContainerElement.on('closeScreen', 'div', function(){
       var toScreen;
       var fromScreen = $(this).attr('class').split(/\s+/)[0];
 
       toScreen = navigationHistory[fromScreen].fromScreen;
       delete navigationHistory[fromScreen];
       console.log('Navigating from ' + fromScreen + ' to ' + toScreen);
-      aContainerElement.find('.' + toScreen).triggerHandler('show');
+      aContainerElement.find('.' + toScreen).triggerHandler('showScreen');
     });
 
-    result = {
-      open : open,
-      close : close
-    };
-
-    return result;
+    return ;
   };
  
   return create;
