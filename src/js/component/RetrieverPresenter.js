@@ -12,24 +12,19 @@ module.exports = (function () {
   'use strict';
 
   var create = function (aContainerElement){
-    var result;
-    var component;
+    var component = {};
     var processForm;
 
-    component = createBaseComponent(
-      // User triggered event
-      {
-        'containerElement' : aContainerElement,
-        'activateHeadItems' : function(aActivatedId){
-          editRecordAt(aActivatedId);
-        },
-        'actionCreate' : function(){
-          var newModelToWorkOn = repository.createHeadItem();
-          component.navigateByOpen('editor', [ newModelToWorkOn ]);
-        },
-        'view' : createView(aContainerElement)
-      }
-    );
+    // User triggered event
+    component.activateHeadItems = function(aActivatedId){
+      editRecordAt(aActivatedId);
+    };
+    component.actionCreate = function(){
+      var newModelToWorkOn = repository.createHeadItem();
+      component.navigateByOpen('editor', [ newModelToWorkOn ]);
+    };
+    component.view = createView(aContainerElement);
+    createBaseComponent.apply(component, [aContainerElement]);
 
     processForm = function(){
       component.model = {getHeadItems : function(){ return repository.retrieve(); }};
@@ -42,9 +37,7 @@ module.exports = (function () {
       component.navigateByOpen('editor', [ modelToWorkOn ]);
     };
 
-    result = {};
-
-    return result;
+    return component;
   };
  
   return create;

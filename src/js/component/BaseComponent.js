@@ -9,15 +9,16 @@ var $ = require('jquery');
 module.exports = (function () {
   'use strict';
 
-  var create = function (aThisComponent){
-    var result = aThisComponent || {};
+  var create = function (aContainerElement){
     var internalRender;
     var createUserTriggeredEventHandler;
     var createUserTriggeredActionEventHandler;
     var open;
     var close;
     var navigateByOpen;
+    var that = this;
 
+    
     createUserTriggeredEventHandler = function(aHandler){
       var activatedId;
       return function(){
@@ -32,21 +33,21 @@ module.exports = (function () {
       var propertyName;
       var className;
 
-      for (each in result) {
+      for (each in that) {
         if (each.indexOf('activate') !== 0) {
           continue;
         }
-        if (!result.hasOwnProperty(each)) {
+        if (!that.hasOwnProperty(each)) {
           continue;
         }
-        if (typeof(result[each]) !== 'function') {
+        if (typeof(that[each]) !== 'function') {
           continue;
         }
         propertyName = each.slice('activate'.length);
 
         className = 'prop' + propertyName;
 
-        result.containerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(result[each]));
+        aContainerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(that[each]));
       }
 
     })();
@@ -62,24 +63,24 @@ module.exports = (function () {
       var each;
       var className;
 
-      for (each in result) {
+      for (each in that) {
         if (each.indexOf('action') !== 0) {
           continue;
         }
-        if (!result.hasOwnProperty(each)) {
+        if (!that.hasOwnProperty(each)) {
           continue;
         }
-        if (typeof(result[each]) !== 'function') {
+        if (typeof(that[each]) !== 'function') {
           continue;
         }
 
         if (each === 'actionDefault') {
-          result.containerElement.on( 'submit', 'form', createUserTriggeredActionEventHandler(result[each]));
+          aContainerElement.on( 'submit', 'form', createUserTriggeredActionEventHandler(that[each]));
         } else {
           className = each;
 
-          result.containerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(result[each]));
-          result.containerElement.on(each, createUserTriggeredActionEventHandler(result[each]));
+          aContainerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(that[each]));
+          aContainerElement.on(each, createUserTriggeredActionEventHandler(that[each]));
         }
 
       }
@@ -88,7 +89,7 @@ module.exports = (function () {
 
 
     /* Wire model's properties to output fields in view */ 
-    internalRender = function(aContainerElement, aModel){
+    internalRender = function(aInternalContainerElement, aModel){
       var each;
       var propertyName;
       var className;
@@ -110,12 +111,12 @@ module.exports = (function () {
         }
 
         propertyName = each.slice('get'.length);
-        //console.log('propertyName: ' + propertyName);
+        console.log('propertyName: ' + propertyName);
         className = 'prop' + propertyName;
         value = aModel[each]();
         // Treat list value differently than single value
         if (value && value.constructor === Array){
-          prototypeItem = aContainerElement.find('.rawcrud-list.' + className);
+          prototypeItem = aInternalContainerElement.find('.rawcrud-list.' + className);
           prototypeItem.nextAll().remove();
           // FIXME do not clone id attributes
           for(i=0;i<value.length;i+=1){
@@ -123,37 +124,37 @@ module.exports = (function () {
             internalRender(newItem, value[i]);
           }
         } else {
-          aContainerElement.find('input.' + className).val(value);
-          aContainerElement.find('td.' + className).text(value);
+          aInternalContainerElement.find('input.' + className).val(value);
+          aInternalContainerElement.find('td.' + className).text(value);
         }
         
       }
     };
 
-    result.render = function() {
-      return internalRender(result.containerElement, result.model);
+    that.render = function() {
+      return internalRender(aContainerElement, that.model);
     };
 
     /* Wire model's properties to input fields in view */ 
-    result.evaluate = function(){
+    that.evaluate = function(){
       var each;
       var propertyName;
       var className;
 
-      for (each in result.model) {
+      for (each in that.model) {
         if (each.indexOf('set') !== 0) {
           continue;
         }
-        if (!result.model.hasOwnProperty(each)) {
+        if (!that.model.hasOwnProperty(each)) {
           continue;
         }
-        if (typeof(result.model[each]) !== 'function') {
+        if (typeof(that.model[each]) !== 'function') {
           continue;
         }
         propertyName = each.slice('set'.length);
         className = 'prop' + propertyName;
 
-        result.model[each](result.containerElement.find('input.' + className).val());
+        that.model[each](aContainerElement.find('input.' + className).val());
       }
 
     };
@@ -161,43 +162,43 @@ module.exports = (function () {
     // Screen flow, Navigation triggered action
     open = function(aEvent, aModelToWorkOn){
       // model is set HERE!
-      result.model = aModelToWorkOn;
-      result.render();
-      if (result.view && typeof result.view.open === 'function'){
-        result.view.open();
+      that.model = aModelToWorkOn;
+      that.render();
+      if (that.view && typeof that.view.open === 'function'){
+        that.view.open();
       }
     };
 
-    result.open = open;
-    result.containerElement.on('open', function(aEvent, aModelToWorkOn){
-      result.open(aEvent, aModelToWorkOn);
+    that.open = open;
+    aContainerElement.on('open', function(aEvent, aModelToWorkOn){
+      that.open(aEvent, aModelToWorkOn);
       //TODO: aEvent.stopPropagation(); This prevents dialog from opening
       // Presumably conflict with dialog-widget's open-event
     });
 
-    result.containerElement.on('show', function(aEvent, aModelToWorkOn){
-      if (typeof result.show === 'function'){
-        result.show(aEvent, aModelToWorkOn);
+    aContainerElement.on('show', function(aEvent, aModelToWorkOn){
+      if (typeof that.show === 'function'){
+        that.show(aEvent, aModelToWorkOn);
       }
       return false;
     });
 
     // Screen flow
     close = function(){
-      if (result.view && typeof result.view.close === 'function'){
-        result.view.close();
+      if (that.view && typeof that.view.close === 'function'){
+        that.view.close();
       }
-      result.containerElement.trigger('close');
+      aContainerElement.trigger('close');
     };
     
-    result.close = close;
+    that.close = close;
 
     navigateByOpen = function(aTarget, aData){
-      result.containerElement.trigger('open', {target : aTarget, data : aData});   
+      aContainerElement.trigger('open', {target : aTarget, data : aData});   
     };
-    result.navigateByOpen = navigateByOpen;
+    that.navigateByOpen = navigateByOpen;
 
-    return result;
+    return that;
   };
  
   return create;

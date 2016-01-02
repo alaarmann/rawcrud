@@ -14,27 +14,23 @@ module.exports = (function () {
 
   var create = function (aContainerElement){
     var save;
-    var result;
     var processForm;
-    var component;
+    var component = {};
 
-    component = createBaseComponent(
-      {
-        'containerElement' : aContainerElement,
-        // User triggered action, will be bound to .actionProcess
-        'actionProcess' : function(){
-          processForm();
-        },
-        'actionDefault' : function(){
-          processForm();
-        },
-        'actionCancel' : function(){
-          // Screen flow
-          component.close();
-        },
-        'view' : createView(aContainerElement)
-      }
-    );
+    // User triggered action, will be bound to .actionProcess
+    component.actionProcess = function(){
+      processForm();
+    };
+    component.actionDefault = function(){
+      processForm();
+    };
+    component.actionCancel = function(){
+      // Screen flow
+      component.close();
+    };
+    component.view = createView(aContainerElement);
+
+    createBaseComponent.apply(component, [aContainerElement]);
 
     save = repository.save;
 
@@ -46,9 +42,7 @@ module.exports = (function () {
       component.close();
     };
 
-    result = {};
-
-    return result;
+    return component;
   };
  
   return create;
