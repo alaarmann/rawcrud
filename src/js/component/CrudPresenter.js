@@ -6,34 +6,24 @@
 
 var createEditor = require('./EditorPresenter.js');
 var createRetriever = require('./RetrieverPresenter.js');
-var createView = require('./CrudView.js');
+var RegistrationCapable = require('./RegistrationCapable.js');
+
 
 
 module.exports = (function () {
   'use strict';
 
   var create = function (aContainerElement){
-    var retrieverElement;
-    var editorComponent;
-    var editorElement;
-    var retrieverComponent;
-    var result;
-    var view;
+    var thisComponent;
 
-    view = createView(aContainerElement);
+    thisComponent = {getContainerElement : function(){return aContainerElement;}};
+    RegistrationCapable.apply(thisComponent);
 
-    // TODO: move cascading component-creation to separate module. No jquery dependency here!
-    editorElement = aContainerElement.find('.editor');
-    retrieverElement = aContainerElement.find('.result');
+    thisComponent.register('editor', createEditor);
+    thisComponent.register('result', createRetriever);
 
 
-    editorComponent = createEditor(editorElement);
-
-    retrieverComponent = createRetriever(retrieverElement);
-
-    result = {};
-
-    return result;
+    return;
   };
  
   return create;
