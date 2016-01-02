@@ -6,11 +6,13 @@
 
 var createView = require('./EditorView.js');
 var createBaseComponent = require('./BaseComponent.js');
+var repository = require('../model/Repository.js');
+
 
 module.exports = (function () {
   'use strict';
 
-  var create = function (parameters){
+  var create = function (aContainerElement){
     var save;
     var result;
     var processForm;
@@ -18,7 +20,7 @@ module.exports = (function () {
 
     component = createBaseComponent(
       {
-        'containerElement' : parameters.containerElement,
+        'containerElement' : aContainerElement,
         // User triggered action, will be bound to .actionProcess
         'actionProcess' : function(){
           processForm();
@@ -30,11 +32,11 @@ module.exports = (function () {
           // Screen flow
           component.close();
         },
-        'view' : createView(parameters.containerElement)
+        'view' : createView(aContainerElement)
       }
     );
 
-    save = parameters.saveToRepository;
+    save = repository.save;
 
     processForm = function(){
       component.evaluate();

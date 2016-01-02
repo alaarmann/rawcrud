@@ -22,23 +22,15 @@ describe("Repository", function() {
     mockery.enable({ useCleanCache: true });
     this.triggerMock = jasmine.createSpy('trigger');
     mockery.registerMock('./trigger.js', this.triggerMock);
-    var createRepository = require('../src/js/model/Repository.js');
+    var repository = require('../src/js/model/Repository.js');
 
-    this.repository = createRepository();
+    this.repository = repository;
     this.headItemCount = 3;
   });
 
   afterEach(function() {
     mockery.deregisterMock('./trigger.js');
     mockery.disable();
-  });
-
-  describe("create", function() {
-    it("creates a Repository", function() {
-      var repository = this.repository;
-
-      expect(repository).not.toBe(null);
-    });
   });
 
   describe("createHeadItem", function() {

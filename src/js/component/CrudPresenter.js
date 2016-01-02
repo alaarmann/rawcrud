@@ -12,29 +12,24 @@ var createView = require('./CrudView.js');
 module.exports = (function () {
   'use strict';
 
-  var create = function (parameters){
+  var create = function (aContainerElement){
     var retrieverElement;
-    var repository;
-    var containerElement;
     var editorComponent;
     var editorElement;
     var retrieverComponent;
     var result;
     var view;
 
-    containerElement = parameters.containerElement;
-    repository = parameters.repository;
-
-    view = createView(containerElement);
+    view = createView(aContainerElement);
 
     // TODO: move cascading component-creation to separate module. No jquery dependency here!
-    editorElement = containerElement.find('.editor');
-    retrieverElement = containerElement.find('.result');
+    editorElement = aContainerElement.find('.editor');
+    retrieverElement = aContainerElement.find('.result');
 
 
-    editorComponent = createEditor({containerElement : editorElement, saveToRepository : repository.save});
+    editorComponent = createEditor(editorElement);
 
-    retrieverComponent = createRetriever({containerElement : retrieverElement, startWorkOn : repository.startWorkOn, retrieve : repository.retrieve, createHeadItem : repository.createHeadItem});
+    retrieverComponent = createRetriever(retrieverElement);
 
     result = {};
 
