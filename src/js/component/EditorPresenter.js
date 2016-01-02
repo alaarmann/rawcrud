@@ -29,6 +29,16 @@ module.exports = (function () {
       // Screen flow
       component.closeScreen();
     };
+    // Callback for screen flow (Navigation triggered action)
+    component.openScreen = function(aModelToWorkOn){
+      // model is set HERE!
+      component.model = aModelToWorkOn;
+      component.render();
+      if (component.view && typeof component.view.open === 'function'){
+        component.view.open();
+      }
+    };
+
     component.view = createView(aContainerElement);
 
     createBaseComponent.apply(component, [aContainerElement]);

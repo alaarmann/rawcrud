@@ -32,6 +32,7 @@ module.exports = (function () {
       component.model = {getHeadItems : function(){ return repository.retrieve(); }};
       component.render();
     };
+    component.openScreen = processForm;
     component.showScreen = processForm;
 
     var editRecordAt = function (aId){
