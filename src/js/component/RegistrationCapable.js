@@ -9,23 +9,26 @@ var $ = require('jquery');
 module.exports = (function () {
   'use strict';
 
-  var create = function (aContainerElement){
+  var create = function (){
     var register;
-  
+    var containerElement;
+
+    // error at contruction-time if not defined
+    containerElement = this.getContainerElement();
+
     register = function(aId, aComponentCreator){
       var descendantElement;
 
-      descendantElement = aContainerElement.find('.' + aId);
+      descendantElement = containerElement.find('.' + aId);
       if (!descendantElement.length){
         descendantElement = $('<div/>').addClass(aId);
-        aContainerElement.append(descendantElement);
+        containerElement.append(descendantElement);
       }
       aComponentCreator(descendantElement);
     };
     
-    return {
-      register : register
-    };
+    this.register = register;
+    return this;
   };
  
   return create;
