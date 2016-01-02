@@ -8,7 +8,7 @@ var mockery = require('mockery');
 
 describe("Repository", function() {
   'use strict';
-  var allowables = ['../src/js/model/Repository.js', './headItem.js', './util.js', 'jquery'];
+  var allowables = ['../src/js/model/repository.js', './headItem.js', './util.js', 'jquery'];
 
   beforeAll(function() {
     mockery.registerAllowables(allowables);
@@ -22,7 +22,7 @@ describe("Repository", function() {
     mockery.enable({ useCleanCache: true });
     this.triggerMock = jasmine.createSpy('trigger');
     mockery.registerMock('./trigger.js', this.triggerMock);
-    var repository = require('../src/js/model/Repository.js');
+    var repository = require('../src/js/model/repository.js');
 
     this.repository = repository;
     this.headItemCount = 3;

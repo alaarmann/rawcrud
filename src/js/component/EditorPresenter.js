@@ -6,7 +6,7 @@
 
 var createView = require('./EditorView.js');
 var createBaseComponent = require('./BaseComponent.js');
-var repository = require('../model/Repository.js');
+var repository = require('../model/repository.js');
 
 
 module.exports = (function () {
