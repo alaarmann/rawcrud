@@ -60,7 +60,7 @@ var startWorkOn = function(aId){
   return createHeadItem(headItemsRetrieved[aId].exportCollection());
 };
 
-var retrieve = function(){
+var retrieve = function(aFilter){
   'use strict';
   var each;
 
@@ -69,7 +69,9 @@ var retrieve = function(){
     if (!headItems.hasOwnProperty(each)) {
       continue;
     }
-    headItemsRetrieved[each] = headItems[each];
+    if (((typeof aFilter.getOwner() === 'undefined' || aFilter.getOwner() === null || aFilter.getOwner().length === 0) || headItems[each].getOwner().indexOf(aFilter.getOwner()) > -1) && ((typeof aFilter.getReference() === 'undefined' || aFilter.getReference() === null || aFilter.getReference().length === 0) || headItems[each].getReference().indexOf(aFilter.getReference()) > -1)) {
+      headItemsRetrieved[each] = headItems[each];
+    }
   }
         
   return getHeadItems();

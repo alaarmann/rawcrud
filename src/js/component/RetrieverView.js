@@ -12,6 +12,24 @@ module.exports = (function () {
 
   var create = function (aContainerElement){
     var creatorElement;
+    var filterElement;
+
+    filterElement =  $(
+      '<div title="Filter for HeadItem-Search">' +
+        '<form>' +
+          '<fieldset>' +
+            '<label for="filterOwner">Owner</label>' +
+            '<input type="text" name="owner" id="filterOwner" value="" class="propOwner text ui-widget-content ui-corner-all"/>' +
+            '<label for="filterReference">Reference</label>' +
+            '<input type="text" name="reference" id="filterReference" value="" class="propReference text ui-widget-content ui-corner-all"/>' +
+            '<div class="actionFind button">Find HeadItems</div>' +
+            '<input type="submit" tabindex="-1" class="invisible"/>' +
+          '</fieldset>' +
+        '</form>' +
+      '</div>'
+    );
+    aContainerElement.append(filterElement);
+    filterElement.find('.actionFind.button').button();
 
     creatorElement = $('<div>Create HeadItem</div>').addClass('button');
     aContainerElement.append(creatorElement);

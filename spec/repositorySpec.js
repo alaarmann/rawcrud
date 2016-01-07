@@ -8,7 +8,7 @@ var mockery = require('mockery');
 
 describe("Repository", function() {
   'use strict';
-  var allowables = ['../src/js/model/repository.js', './headItem.js', './util.js', 'jquery'];
+  var allowables = ['../src/js/model/repository.js', './headItem.js', './util.js', 'jquery', '../src/js/model/headItemFilter.js'];
 
   beforeAll(function() {
     mockery.registerAllowables(allowables);
@@ -23,7 +23,9 @@ describe("Repository", function() {
     this.triggerMock = jasmine.createSpy('trigger');
     mockery.registerMock('./trigger.js', this.triggerMock);
     var repository = require('../src/js/model/repository.js');
+    var createHeadItemFilter = require('../src/js/model/headItemFilter.js');
 
+    this.headItemFilter = createHeadItemFilter();
     this.repository = repository;
     this.headItemCount = 3;
   });
@@ -57,7 +59,7 @@ describe("Repository", function() {
     it("saves a new item thereby creating it", function() {
       var repository = this.repository;
       repository.save(repository.createHeadItem({owner : 'NEMO', reference : '20151124-006'}));
-      var headItems = repository.retrieve();
+      var headItems = repository.retrieve(this.headItemFilter);
 
       expect(headItems.length).toEqual(this.headItemCount + 1);
       expect(headItems[this.headItemCount].getReference()).toEqual('20151124-006');
@@ -68,10 +70,10 @@ describe("Repository", function() {
   describe("startWorkOn", function() {
     it("returns a clone of the HeadItem at given index", function() {
       var repository = this.repository;
-      repository.retrieve();
+      repository.retrieve(this.headItemFilter);
       var anId = '1000001';
       var clonedHeadItem = repository.startWorkOn(anId);
-      var headItem = repository.retrieve()[0];
+      var headItem = repository.retrieve(this.headItemFilter)[0];
 
       expect(clonedHeadItem).not.toBe(null);
       expect(clonedHeadItem).not.toBe(headItem);
@@ -85,7 +87,7 @@ describe("Repository", function() {
   describe("retrieve", function() {
     it("retrieves item list", function() {
       var repository = this.repository;
-      var headItems = repository.retrieve();
+      var headItems = repository.retrieve(this.headItemFilter);
 
       expect(headItems.length).toEqual(this.headItemCount);
     });
@@ -93,7 +95,7 @@ describe("Repository", function() {
     it("does not trigger view to render headItems", function() {
       var repository = this.repository;
 
-      repository.retrieve();
+      repository.retrieve(this.headItemFilter);
       expect(this.triggerMock).not.toHaveBeenCalledWith('render', 'headItems');
     });
   });

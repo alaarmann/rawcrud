@@ -8,6 +8,7 @@ var createView = require('./RetrieverView.js');
 var createBaseComponent = require('./BaseComponent.js');
 var makeNavigationCapable = require('./NavigationCapable.js');
 var repository = require('../model/repository.js');
+var createHeadItemFilter = require('../model/headItemFilter.js');
 
 module.exports = (function () {
   'use strict';
@@ -24,12 +25,23 @@ module.exports = (function () {
       var newModelToWorkOn = repository.createHeadItem();
       component.openNewScreen('editor', [ newModelToWorkOn ]);
     };
+    component.actionFind = function(){
+      processForm();
+    };
+    component.actionDefault = function(){
+      processForm();
+    };
     component.view = createView(aContainerElement);
     createBaseComponent.apply(component, [aContainerElement]);
     makeNavigationCapable.apply(component, [aContainerElement]);
 
     processForm = function(){
-      component.model = {getHeadItems : function(){ return repository.retrieve(); }};
+      var headItemFilter = createHeadItemFilter();
+      component.model = headItemFilter;
+      component.evaluate();
+
+      console.log('retrieve with filter owner=' + headItemFilter.getOwner() + ' and reference=' + headItemFilter.getReference());
+      component.model = {getHeadItems : function(){ return repository.retrieve(headItemFilter); }};
       component.render();
     };
     component.openScreen = processForm;
