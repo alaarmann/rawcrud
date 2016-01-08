@@ -5,15 +5,20 @@
 /*globals require, module */
 var $ = require('jquery');
 
+/*
+  required:
+  getContainerElement()
+*/
 
 module.exports = (function () {
   'use strict';
 
-  var create = function (aContainerElement){
+  var create = function (){
     var internalRender;
     var createUserTriggeredEventHandler;
     var createUserTriggeredActionEventHandler;
     var that = this;
+    var containerElement = that.getContainerElement();
 
     
     createUserTriggeredEventHandler = function(aHandler){
@@ -44,7 +49,7 @@ module.exports = (function () {
 
         className = 'prop' + propertyName;
 
-        aContainerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(that[each]));
+        containerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(that[each]));
       }
 
     })();
@@ -72,12 +77,12 @@ module.exports = (function () {
         }
 
         if (each === 'actionDefault') {
-          aContainerElement.on( 'submit', 'form', createUserTriggeredActionEventHandler(that[each]));
+          containerElement.on( 'submit', 'form', createUserTriggeredActionEventHandler(that[each]));
         } else {
           className = each;
 
-          aContainerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(that[each]));
-          aContainerElement.on(each, createUserTriggeredActionEventHandler(that[each]));
+          containerElement.on('click', '.' + className, createUserTriggeredActionEventHandler(that[each]));
+          containerElement.on(each, createUserTriggeredActionEventHandler(that[each]));
         }
 
       }
@@ -129,7 +134,7 @@ module.exports = (function () {
     };
 
     that.render = function() {
-      return internalRender(aContainerElement, that.model);
+      return internalRender(containerElement, that.model);
     };
 
     /* Wire model's properties to input fields in view */ 
@@ -151,7 +156,7 @@ module.exports = (function () {
         propertyName = each.slice('set'.length);
         className = 'prop' + propertyName;
 
-        that.model[each](aContainerElement.find('input.' + className).val());
+        that.model[each](containerElement.find('input.' + className).val());
       }
 
     };

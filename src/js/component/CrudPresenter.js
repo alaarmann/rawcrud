@@ -15,18 +15,18 @@ module.exports = (function () {
   'use strict';
 
   var create = function (aContainerElement){
-    var thisComponent;
+    var component;
 
-    thisComponent = {getContainerElement : function(){return aContainerElement;}};
-    RegistrationCapable.apply(thisComponent);
-    makeNavigationCapable.apply(thisComponent, [aContainerElement]);
+    component = {getContainerElement : function(){return aContainerElement;}};
+    RegistrationCapable.apply(component);
+    makeNavigationCapable.apply(component);
 
 
-    thisComponent.register('editor', createEditor);
-    thisComponent.register('result', createRetriever);
+    component.register('editor', createEditor);
+    component.register('result', createRetriever);
 
     // Open Retriever
-    thisComponent.openNewScreen('result');
+    component.openNewScreen('result');
 
     return;
   };

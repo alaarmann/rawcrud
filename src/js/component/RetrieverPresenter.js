@@ -14,8 +14,9 @@ module.exports = (function () {
   'use strict';
 
   var create = function (aContainerElement){
-    var component = {};
+    var component = {getContainerElement : function(){return aContainerElement;}};
     var processForm;
+    var view;
 
     // User triggered event
     component.activateHeadItems = function(aActivatedId){
@@ -31,9 +32,11 @@ module.exports = (function () {
     component.actionDefault = function(){
       processForm();
     };
-    component.view = createView(aContainerElement);
-    createBaseComponent.apply(component, [aContainerElement]);
-    makeNavigationCapable.apply(component, [aContainerElement]);
+    view = createView(aContainerElement);
+    component.getView = function(){return view;};
+
+    createBaseComponent.apply(component);
+    makeNavigationCapable.apply(component);
 
     processForm = function(){
       var headItemFilter = createHeadItemFilter();

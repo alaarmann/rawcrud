@@ -16,7 +16,8 @@ module.exports = (function () {
   var create = function (aContainerElement){
     var save;
     var processForm;
-    var component = {};
+    var view;
+    var component = {getContainerElement : function(){return aContainerElement;}};
 
     // User triggered action, will be bound to .actionProcess
     component.actionProcess = function(){
@@ -31,18 +32,23 @@ module.exports = (function () {
     };
     // Callback for screen flow (Navigation triggered action)
     component.openScreen = function(aModelToWorkOn){
+      var view; 
+      if (typeof component.getView === 'function'){
+        view = component.getView();
+      }
       // model is set HERE!
       component.model = aModelToWorkOn;
       component.render();
-      if (component.view && typeof component.view.open === 'function'){
-        component.view.open();
+      if (view && typeof view.open === 'function'){
+        view.open();
       }
     };
 
-    component.view = createView(aContainerElement);
+    view = createView(aContainerElement);
+    component.getView = function(){return view;};
 
-    createBaseComponent.apply(component, [aContainerElement]);
-    makeNavigationCapable.apply(component, [aContainerElement]);
+    createBaseComponent.apply(component);
+    makeNavigationCapable.apply(component);
 
     save = repository.save;
 

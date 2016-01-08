@@ -15,12 +15,6 @@ var handleNavigationToOpenScreen = function(aFromScreen, aToScreen, aData){
   $('.' + aToScreen).triggerHandler('openScreen', aData);
 };
 
-//var handleNavigationToShowScreen = function(aFromScreen, aToScreen, aData){
-//  navigationHistory[aToScreen] = {fromScreen : aFromScreen};
-//  console.log('Navigating from ' + aFromScreen + ' to show ' + aToScreen);
-//  $('.' + aToScreen).triggerHandler('showScreen', aData);
-//};
-
 var handleNavigationOnCloseScreen = function(aFromScreen){
   'use strict';
   var toScreen;
@@ -31,52 +25,56 @@ var handleNavigationOnCloseScreen = function(aFromScreen){
   $('.' + toScreen).triggerHandler('showScreen');
 };
 
-
-module.exports = (function () {
+/*
+  required:
+  getContainerElement()
+  getView()[optional]
+*/
+module.exports =  function (){
   'use strict';
-
-  var create = function (aContainerElement){
-    var closeScreen;
-    var openNewScreen;
-    var that = this;
+  var closeScreen;
+  var openNewScreen;
+  var that = this;
+  var containerElement = that.getContainerElement();
 
     
-    aContainerElement.on('openScreen', function(aEvent, aModelToWorkOn){
-      if (typeof that.openScreen === 'function'){
-        that.openScreen(aModelToWorkOn);
-      }
-      return false;
-    });
+  containerElement.on('openScreen', function(aEvent, aModelToWorkOn){
+    if (typeof that.openScreen === 'function'){
+      that.openScreen(aModelToWorkOn);
+    }
+    return false;
+  });
 
-    aContainerElement.on('showScreen', function(aEvent, aModelToWorkOn){
-      if (typeof that.showScreen === 'function'){
-        that.showScreen(aModelToWorkOn);
-      }
-      return false;
-    });
+  containerElement.on('showScreen', function(aEvent, aModelToWorkOn){
+    if (typeof that.showScreen === 'function'){
+      that.showScreen(aModelToWorkOn);
+    }
+    return false;
+  });
 
-    // Screen flow
-    closeScreen = function(){
-      var fromScreen;
+  // Screen flow
+  closeScreen = function(){
+    var fromScreen;
+    var view; 
+    if (typeof that.getView === 'function'){
+      view = that.getView();
+    }
 
-      if (that.view && typeof that.view.close === 'function'){
-        that.view.close();
-      }
-      fromScreen = aContainerElement.attr('class').split(/\s+/)[0];
-      handleNavigationOnCloseScreen(fromScreen);
-    };
-    
-    that.closeScreen = closeScreen;
-
-    openNewScreen = function(aToScreen, aData){
-      var fromScreen = aContainerElement.attr('class').split(/\s+/)[0];
-      handleNavigationToOpenScreen(fromScreen, aToScreen, aData);
-    };
-    that.openNewScreen = openNewScreen;
-
-    return that;
+    if (view && typeof view.close === 'function'){
+      view.close();
+    }
+    fromScreen = containerElement.attr('class').split(/\s+/)[0];
+    handleNavigationOnCloseScreen(fromScreen);
   };
- 
-  return create;
-}());
+    
+  that.closeScreen = closeScreen;
+
+  openNewScreen = function(aToScreen, aData){
+    var fromScreen = containerElement.attr('class').split(/\s+/)[0];
+    handleNavigationToOpenScreen(fromScreen, aToScreen, aData);
+  };
+  that.openNewScreen = openNewScreen;
+
+  return that;
+};
 
