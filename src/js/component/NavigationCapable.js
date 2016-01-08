@@ -45,8 +45,7 @@ module.exports = (function () {
       if (typeof that.openScreen === 'function'){
         that.openScreen(aModelToWorkOn);
       }
-      //TODO: aEvent.stopPropagation(); This prevents dialog from opening
-      // Presumably conflict with dialog-widget's open-event
+      return false;
     });
 
     aContainerElement.on('showScreen', function(aEvent, aModelToWorkOn){
