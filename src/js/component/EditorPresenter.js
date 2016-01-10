@@ -60,6 +60,10 @@ module.exports = (function () {
       component.closeScreen();
     };
 
+    // bind actions once at construction time
+    component.bindAction();
+    component.bindActivate();
+
     return component;
   };
  

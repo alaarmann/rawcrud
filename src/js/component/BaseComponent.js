@@ -18,7 +18,6 @@ module.exports = (function () {
     var createUserTriggeredEventHandler;
     var createUserTriggeredActionEventHandler;
     var that = this;
-    var containerElement = that.getContainerElement();
 
     
     createUserTriggeredEventHandler = function(aHandler){
@@ -30,10 +29,11 @@ module.exports = (function () {
     };
 
     /* Attach handler for user triggered event */
-    (function (){
+    that.bindActivate = function (){
       var each;
       var propertyName;
       var className;
+      var containerElement = that.getContainerElement();
 
       for (each in that) {
         if (each.indexOf('activate') !== 0) {
@@ -52,7 +52,7 @@ module.exports = (function () {
         containerElement.on('dblclick', '.' + className, createUserTriggeredEventHandler(that[each]));
       }
 
-    })();
+    };
 
     createUserTriggeredActionEventHandler = function(aHandler){
       return function(){
@@ -61,9 +61,10 @@ module.exports = (function () {
         };
     };
 
-    (function (){
+    that.bindAction = function (){
       var each;
       var className;
+      var containerElement = that.getContainerElement();
 
       for (each in that) {
         if (each.indexOf('action') !== 0) {
@@ -87,7 +88,7 @@ module.exports = (function () {
 
       }
 
-    })();
+    };
 
 
     /* Wire model's properties to output fields in view */ 
@@ -134,6 +135,7 @@ module.exports = (function () {
     };
 
     that.render = function() {
+      var containerElement = that.getContainerElement();
       return internalRender(containerElement, that.model);
     };
 
@@ -142,6 +144,7 @@ module.exports = (function () {
       var each;
       var propertyName;
       var className;
+      var containerElement = that.getContainerElement();
 
       for (each in that.model) {
         if (each.indexOf('set') !== 0) {

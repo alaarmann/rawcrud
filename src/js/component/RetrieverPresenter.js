@@ -55,6 +55,9 @@ module.exports = (function () {
       component.openNewScreen('editor', [ modelToWorkOn ]);
     };
 
+    // bind actions once at construction time
+    component.bindAction();
+    component.bindActivate();
     return component;
   };
  
