@@ -17,6 +17,11 @@ module.exports = (function () {
     var component = {getContainerElement : function(){return aContainerElement;}};
     var processForm;
     var view;
+    view = createView(aContainerElement);
+    component.getView = function(){return view;};
+
+    createBaseComponent.apply(component);
+    makeNavigationCapable.apply(component);
 
     // User triggered event
     component.activateHeadItems = function(aActivatedId){
@@ -32,11 +37,6 @@ module.exports = (function () {
     component.actionDefault = function(){
       processForm();
     };
-    view = createView(aContainerElement);
-    component.getView = function(){return view;};
-
-    createBaseComponent.apply(component);
-    makeNavigationCapable.apply(component);
 
     processForm = function(){
       var headItemFilter = createHeadItemFilter();

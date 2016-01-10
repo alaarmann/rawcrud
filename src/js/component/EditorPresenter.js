@@ -19,6 +19,12 @@ module.exports = (function () {
     var view;
     var component = {getContainerElement : function(){return aContainerElement;}};
 
+    view = createView(aContainerElement);
+    component.getView = function(){return view;};
+
+    createBaseComponent.apply(component);
+    makeNavigationCapable.apply(component);
+
     // User triggered action, will be bound to .actionProcess
     component.actionProcess = function(){
       processForm();
@@ -44,11 +50,6 @@ module.exports = (function () {
       }
     };
 
-    view = createView(aContainerElement);
-    component.getView = function(){return view;};
-
-    createBaseComponent.apply(component);
-    makeNavigationCapable.apply(component);
 
     save = repository.save;
 
