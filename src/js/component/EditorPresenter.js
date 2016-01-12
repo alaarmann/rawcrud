@@ -14,12 +14,9 @@ module.exports =  function (aContainerElement){
   'use strict';
   var save;
   var processForm;
-  var view;
   var component = {getContainerElement : function(){return aContainerElement;}};
 
-  view = createView(aContainerElement);
-  component.getView = function(){return view;};
-
+  createView.apply(component);
   createBaseComponent.apply(component);
   makeNavigationCapable.apply(component);
 
@@ -36,15 +33,11 @@ module.exports =  function (aContainerElement){
   };
   // Callback for screen flow (Navigation triggered action)
   component.openScreen = function(aModelToWorkOn){
-    var view; 
-    if (typeof component.getView === 'function'){
-      view = component.getView();
-    }
     // model is set HERE!
     component.model = aModelToWorkOn;
     component.render();
-    if (view && typeof view.open === 'function'){
-      view.open();
+    if (typeof component.openView === 'function'){
+      component.openView();
     }
   };
 
@@ -59,7 +52,9 @@ module.exports =  function (aContainerElement){
     component.closeScreen();
   };
 
-  // bind actions once at construction time
+  // once at construction time
+  // TODO: order is important here!!
+  component.buildView();
   component.bindAction();
   component.bindActivate();
 

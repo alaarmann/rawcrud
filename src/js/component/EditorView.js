@@ -6,18 +6,18 @@
 
 var $ = require('jquery');
 
-module.exports = (function () {
+module.exports = function (){
   'use strict';
+  var dialogElement;
+  var that = this;
 
-  var create = function (aContainerElement){
-    var dialogElement;
+  that.buildView = function(){
+    var containerElement = that.getContainerElement();
     var containerElementId;
-    var open;
-    var close;
         
-    aContainerElement.uniqueId();
+    containerElement.uniqueId();
 
-    containerElementId = aContainerElement.attr('id');
+    containerElementId = containerElement.attr('id');
     dialogElement =  $(
       '<div title="Create / edit HeadItem" class="editor-dialog">' +
         '<form>' +
@@ -32,7 +32,7 @@ module.exports = (function () {
       '</div>'
     );
 
-    aContainerElement.append(dialogElement);
+    containerElement.append(dialogElement);
 
     dialogElement.dialog({
       autoOpen: false,
@@ -43,7 +43,7 @@ module.exports = (function () {
       close: function( aEvent ) {
         // event triggered by built-in close (X)-Button
         if ( aEvent.originalEvent ) {
-            aContainerElement.triggerHandler('actionCancel');
+            containerElement.triggerHandler('actionCancel');
             return false;
         }
       },
@@ -56,27 +56,23 @@ module.exports = (function () {
         {
           text: "Cancel",
           click : function(){
-            aContainerElement.triggerHandler('actionCancel'); // presenter binds actions to events also
+            containerElement.triggerHandler('actionCancel'); // presenter binds actions to events also
           }
         }
       ]
     });
 
-    open = function() {
-      dialogElement.dialog( 'open' );
-    };
-
-    close = function() {
-      dialogElement.dialog( 'close' );
-    };
- 
-
-    return {
-      open : open,
-      close : close
-    };
+    return;
   };
- 
-  return create;
-}());
+
+  that.openView = function() {
+    dialogElement.dialog( 'open' );
+  };
+
+  that.closeView = function() {
+    dialogElement.dialog( 'close' );
+  };
+
+  return that;
+};
 

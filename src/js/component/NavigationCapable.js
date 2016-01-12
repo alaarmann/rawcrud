@@ -28,7 +28,7 @@ var handleNavigationOnCloseScreen = function(aFromScreen){
 /*
   required:
   getContainerElement()
-  getView()[optional]
+  closeView()[optional]
 */
 module.exports =  function (){
   'use strict';
@@ -55,13 +55,8 @@ module.exports =  function (){
   // Screen flow
   closeScreen = function(){
     var fromScreen;
-    var view; 
-    if (typeof that.getView === 'function'){
-      view = that.getView();
-    }
-
-    if (view && typeof view.close === 'function'){
-      view.close();
+    if (typeof that.closeView === 'function'){
+      that.closeView();
     }
     fromScreen = containerElement.attr('class').split(/\s+/)[0];
     handleNavigationOnCloseScreen(fromScreen);
