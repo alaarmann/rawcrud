@@ -9,7 +9,6 @@ var createBaseComponent = require('./BaseComponent.js');
 var makeNavigationCapable = require('./NavigationCapable.js');
 var repository = require('../model/repository.js');
 var createExtendable = require('../trait/Extendable.js');
-var makeContainerHolder = require('./ContainerHolder.js');
 
 module.exports =  function (aContainerElement){
   'use strict';
@@ -17,7 +16,7 @@ module.exports =  function (aContainerElement){
   var processForm;
   var component = {};
 
-  createExtendable(component).acquire(makeContainerHolder).acquire(createView).acquire(createBaseComponent).acquire(makeNavigationCapable);
+  createExtendable(component).acquire(createView).acquire(createBaseComponent).acquire(makeNavigationCapable);
 
   // User triggered action, will be bound to .actionProcess
   component.actionProcess = function(){
@@ -53,7 +52,8 @@ module.exports =  function (aContainerElement){
 
   // once at construction time
   // TODO: order is important here!!
-  component.setContainerElement(aContainerElement);
+  component.getContainerElement = function(){ return aContainerElement;};
+  component.enableOpenShow();
   component.buildView();
   component.bindAction();
   component.bindActivate();

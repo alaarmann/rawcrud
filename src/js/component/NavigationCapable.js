@@ -34,25 +34,21 @@ module.exports =  function (){
   'use strict';
   var that = this;
 
-  that.setContainerElement = function(aContainerElement){
-    aContainerElement.on('openScreen', function(aEvent, aModelToWorkOn){
+  that.enableOpenShow = function(){
+    var containerElement = that.getContainerElement();
+    containerElement.on('openScreen', function(aEvent, aModelToWorkOn){
       if (typeof that.openScreen === 'function'){
         that.openScreen(aModelToWorkOn);
       }
       return false;
     });
 
-    aContainerElement.on('showScreen', function(aEvent, aModelToWorkOn){
+    containerElement.on('showScreen', function(aEvent, aModelToWorkOn){
       if (typeof that.showScreen === 'function'){
         that.showScreen(aModelToWorkOn);
       }
       return false;
     });
-    that.containerElement = aContainerElement;
-  };
-
-  that.getContainerElement = function(){
-    return that.containerElement;
   };
 
   // Screen flow
