@@ -14,10 +14,8 @@ module.exports = function (aContainerElement){
   'use strict';
   var component = {getContainerElement : function(){return aContainerElement;}};
   var processForm;
-  var view;
-  view = createView(aContainerElement);
-  component.getView = function(){return view;};
 
+  createView.apply(component);
   createBaseComponent.apply(component);
   makeNavigationCapable.apply(component);
 
@@ -53,7 +51,8 @@ module.exports = function (aContainerElement){
     component.openNewScreen('editor', [ modelToWorkOn ]);
   };
 
-  // bind actions once at construction time
+  // once at construction time
+  component.buildView();
   component.bindAction();
   component.bindActivate();
   return component;
