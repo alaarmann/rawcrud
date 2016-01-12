@@ -32,8 +32,6 @@ var handleNavigationOnCloseScreen = function(aFromScreen){
 */
 module.exports =  function (){
   'use strict';
-  var closeScreen;
-  var openNewScreen;
   var that = this;
 
   that.setContainerElement = function(aContainerElement){
@@ -58,7 +56,7 @@ module.exports =  function (){
   };
 
   // Screen flow
-  closeScreen = function(){
+  that.closeScreen = function(){
     var containerElement = that.getContainerElement();
     var fromScreen;
     if (typeof that.closeView === 'function'){
@@ -68,14 +66,11 @@ module.exports =  function (){
     handleNavigationOnCloseScreen(fromScreen);
   };
     
-  that.closeScreen = closeScreen;
-
-  openNewScreen = function(aToScreen, aData){
+  that.openNewScreen = function(aToScreen, aData){
     var containerElement = that.getContainerElement();
     var fromScreen = containerElement.attr('class').split(/\s+/)[0];
     handleNavigationToOpenScreen(fromScreen, aToScreen, aData);
   };
-  that.openNewScreen = openNewScreen;
 
   return that;
 };
