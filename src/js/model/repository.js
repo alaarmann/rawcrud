@@ -77,12 +77,14 @@ var retrieve = function(aFilter){
   return getHeadItems();
 };
 
-
-module.exports = {
-  save : save,
-  startWorkOn : startWorkOn,
-  createHeadItem : createHeadItem,
-  retrieve : retrieve
-};
+module.exports = (function () {
+  'use strict';
+  return {
+    save : save,
+    startWorkOn : startWorkOn,
+    createHeadItem : createHeadItem,
+    retrieve : retrieve
+  };
+}());
 
 
