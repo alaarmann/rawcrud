@@ -17,12 +17,13 @@ module.exports = function (aContainerElement){
   RegistrationCapable.apply(component);
   makeNavigationCapable.apply(component);
 
+  // order matters here
   component.register('editor', createEditor);
   component.register('result', createRetriever);
 
   // Open Retriever
   component.openNewScreen('result');
 
-  return;
+  return component;
 };
 
