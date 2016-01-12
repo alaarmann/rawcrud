@@ -35,25 +35,31 @@ module.exports =  function (){
   var closeScreen;
   var openNewScreen;
   var that = this;
-  var containerElement = that.getContainerElement();
 
-    
-  containerElement.on('openScreen', function(aEvent, aModelToWorkOn){
-    if (typeof that.openScreen === 'function'){
-      that.openScreen(aModelToWorkOn);
-    }
-    return false;
-  });
+  that.setContainerElement = function(aContainerElement){
+    aContainerElement.on('openScreen', function(aEvent, aModelToWorkOn){
+      if (typeof that.openScreen === 'function'){
+        that.openScreen(aModelToWorkOn);
+      }
+      return false;
+    });
 
-  containerElement.on('showScreen', function(aEvent, aModelToWorkOn){
-    if (typeof that.showScreen === 'function'){
-      that.showScreen(aModelToWorkOn);
-    }
-    return false;
-  });
+    aContainerElement.on('showScreen', function(aEvent, aModelToWorkOn){
+      if (typeof that.showScreen === 'function'){
+        that.showScreen(aModelToWorkOn);
+      }
+      return false;
+    });
+    that.containerElement = aContainerElement;
+  };
+
+  that.getContainerElement = function(){
+    return that.containerElement;
+  };
 
   // Screen flow
   closeScreen = function(){
+    var containerElement = that.getContainerElement();
     var fromScreen;
     if (typeof that.closeView === 'function'){
       that.closeView();
@@ -65,6 +71,7 @@ module.exports =  function (){
   that.closeScreen = closeScreen;
 
   openNewScreen = function(aToScreen, aData){
+    var containerElement = that.getContainerElement();
     var fromScreen = containerElement.attr('class').split(/\s+/)[0];
     handleNavigationToOpenScreen(fromScreen, aToScreen, aData);
   };

@@ -13,14 +13,13 @@ var $ = require('jquery');
 module.exports = function (){
   'use strict';
   var register;
-  var containerElement;
   var that = this;
 
-  // error at contruction-time if not defined
-  containerElement = that.getContainerElement();
-
   register = function(aId, aComponentCreator){
+    var containerElement;
     var descendantElement;
+ 
+    containerElement = that.getContainerElement();
 
     descendantElement = containerElement.find('.' + aId);
     if (!descendantElement.length){
