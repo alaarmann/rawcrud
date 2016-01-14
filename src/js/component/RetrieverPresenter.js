@@ -9,14 +9,16 @@ var createBaseComponent = require('./BaseComponent.js');
 var makeNavigationCapable = require('./NavigationCapable.js');
 var repository = require('../model/repository.js');
 var createHeadItemFilter = require('../model/headItemFilter.js');
-var createExtendable = require('../trait/Extendable.js');
+var createAspirant = require('../trait/Aspirant.js');
 
 module.exports = function (aContainerElement){
   'use strict';
-  var component = {};
   var processForm;
-
-  createExtendable(component).acquire(createView).acquire(createBaseComponent).acquire(makeNavigationCapable);
+  var component = createAspirant()
+    .acquire(createView)
+    .acquire(createBaseComponent)
+    .acquire(makeNavigationCapable)
+    .start();
 
   // User triggered event
   component.activateHeadItems = function(aActivatedId){

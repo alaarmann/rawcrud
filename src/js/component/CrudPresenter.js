@@ -8,15 +8,14 @@ var createEditor = require('./EditorPresenter.js');
 var createRetriever = require('./RetrieverPresenter.js');
 var RegistrationCapable = require('./RegistrationCapable.js');
 var makeNavigationCapable = require('./NavigationCapable.js');
-var createExtendable = require('../trait/Extendable.js');
+var createAspirant = require('../trait/Aspirant.js');
 
 module.exports = function (aContainerElement){
   'use strict';
-  var component = {};
-
-  createExtendable(component)
+  var component = createAspirant()
     .acquire(RegistrationCapable)
-    .acquire(makeNavigationCapable);
+    .acquire(makeNavigationCapable)
+    .start();
 
   // order matters here
   component.getContainerElement = function(){ return aContainerElement;};

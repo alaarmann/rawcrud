@@ -8,15 +8,17 @@ var createView = require('./EditorView.js');
 var createBaseComponent = require('./BaseComponent.js');
 var makeNavigationCapable = require('./NavigationCapable.js');
 var repository = require('../model/repository.js');
-var createExtendable = require('../trait/Extendable.js');
+var createAspirant = require('../trait/Aspirant.js');
 
 module.exports =  function (aContainerElement){
   'use strict';
   var save;
   var processForm;
-  var component = {};
-
-  createExtendable(component).acquire(createView).acquire(createBaseComponent).acquire(makeNavigationCapable);
+  var component = createAspirant()
+    .acquire(createView)
+    .acquire(createBaseComponent)
+    .acquire(makeNavigationCapable)
+    .start();
 
   // User triggered action, will be bound to .actionProcess
   component.actionProcess = function(){
